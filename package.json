@@ -1,0 +1,17 @@
+{
+    "name": "eosio-did",
+    "version": "0.1.0",
+    "description": "EOSIO DID method implementation. Creates, reads, updates and (potentially) deactivates EOSIO DIDs and associated documents including keys.",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "TODO"
+    },
+    "author": "Jack Tanner",
+    "dependencies": {
+        "elliptic": "^6.5.4",
+        "eosjs": "^21.0.3"
+    }
+}
