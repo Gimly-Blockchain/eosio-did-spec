@@ -1,0 +1,91 @@
+{
+    "@context": "https://www.w3.org/ns/did/v1",
+    "id": "did:example:123",
+    "verificationMethod": [{
+            "id": "did:example:123#owner",
+            "controller": "did:example:123",
+            "type": "Ed25519VerificationKey2018",
+            "publicKeyBase58": "7NFuBesBKK5XHHLtzFxm7S57Eq11gUtndrsvq3Mt3XZNMTHfqc"
+        },
+        {
+            "id": "did:example:123#active",
+            "controller": "did:example:123#owner",
+            "type": "Ed25519VerificationKey2018",
+            "publicKeyBase58": [
+                "7idX86zQ6M3mrzkGQ9MGHf4btSECmcTj4i8Le59ga7CpSpZYy5",
+                "7G5AXPP4RNG5DiZACneMZVenYEQ2GmVwcYUis8YrFHorQic5h8",
+                "88app6Y3DMMa2zFYXtuUZokyZjijN6Pr4W8HgJSmaW8aXgHXp4"
+            ],
+            "threshold": 1
+        }
+    ]
+}
+
+{
+    "@context": "https://www.w3.org/ns/did/v1",
+    "id": "did:example:123",
+    "verificationMethod": [{
+            "id": "did:example:123#owner",
+            "type": "Ed25519VerificationKey2018",
+            "controller": "did:example:123",
+            "publicKeyBase58": "7NFuBesBKK5XHHLtzFxm7S57Eq11gUtndrsvq3Mt3XZNMTHfqc"
+        },
+        {
+            "id": "did:example:123#active",
+            "type": "Ed25519VerificationKey2018",
+            "controller": "did:example:123#owner",
+            "weight": 1
+        },
+        {
+            "id": "did:example:123#active-0",
+            "type": "Ed25519VerificationKey2018",
+            "controller": "did:example:123#active",
+            "publicKeyBase58": "7idX86zQ6M3mrzkGQ9MGHf4btSECmcTj4i8Le59ga7CpSpZYy5",
+        },
+        {
+            "id": "did:example:123#active-1",
+            "type": "Ed25519VerificationKey2018",
+            "controller": "did:example:123#active",
+            "publicKeyBase58": "7G5AXPP4RNG5DiZACneMZVenYEQ2GmVwcYUis8YrFHorQic5h8",
+        },
+        {
+            "id": "did:example:123#active-2",
+            "type": "Ed25519VerificationKey2018",
+            "controller": "did:example:123#active",
+            "publicKeyBase58": "88app6Y3DMMa2zFYXtuUZokyZjijN6Pr4W8HgJSmaW8aXgHXp4",
+        }
+    ]
+}
+
+{
+    "@context": "https://www.w3.org/ns/did/v1",
+    "id": "did:example:123",
+    "verificationMethod": [{
+            "id": "did:example:123#owner",
+            "type": "Ed25519VerificationKey2018",
+            "controller": "did:example:123",
+            "publicKeyBase58": "7NFuBesBKK5XHHLtzFxm7S57Eq11gUtndrsvq3Mt3XZNMTHfqc"
+        },
+        {
+            "id": "did:example:123#active-0",
+            "type": "Ed25519VerificationKey2018",
+            "controller": "did:example:123#owner",
+            "publicKeyBase58": "7idX86zQ6M3mrzkGQ9MGHf4btSECmcTj4i8Le59ga7CpSpZYy5",
+            "weight": 1 // no place for this!!!
+        },
+        {
+            "id": "did:example:123#active-1",
+            "type": "Ed25519VerificationKey2018",
+            "controller": "did:example:123#owner",
+            "publicKeyBase58": "7G5AXPP4RNG5DiZACneMZVenYEQ2GmVwcYUis8YrFHorQic5h8",
+            "weight": 1 // no place for this!!!
+        },
+        {
+            "id": "did:example:123#active-2",
+            "type": "Ed25519VerificationKey2018",
+            "controller": "did:example:123#owner",
+            "publicKeyBase58": "88app6Y3DMMa2zFYXtuUZokyZjijN6Pr4W8HgJSmaW8aXgHXp4",
+            "weight": 1 // no place for this!!!
+        }
+    ]
+}

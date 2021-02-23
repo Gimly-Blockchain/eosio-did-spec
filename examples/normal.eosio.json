@@ -1,0 +1,27 @@
+[{
+        "perm_name": "owner",
+        "parent": "",
+        "required_auth": {
+            "threshold": 1,
+            "keys": [{
+                "key": "7NFuBesBKK5XHHLtzFxm7S57Eq11gUtndrsvq3Mt3XZNMTHfqc",
+                "weight": 1
+            }],
+            "accounts": [],
+            "waits": []
+        }
+    },
+    {
+        "perm_name": "active",
+        "parent": "owner",
+        "required_auth": {
+            "threshold": 1,
+            "keys": [{
+                "key": "7idX86zQ6M3mrzkGQ9MGHf4btSECmcTj4i8Le59ga7CpSpZYy5",
+                "weight": 1
+            }],
+            "accounts": [],
+            "waits": []
+        }
+    }
+]

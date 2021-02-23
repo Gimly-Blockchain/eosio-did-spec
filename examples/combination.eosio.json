@@ -1,0 +1,42 @@
+[{
+        "perm_name": "owner",
+        "parent": "",
+        "required_auth": {
+            "threshold": 3,
+            "keys": [{
+                "key": "7idX86zQ6M3mrzkGQ9MGHf4btSECmcTj4i8Le59ga7CpSpZYy5",
+                "weight": 1
+            }, {
+                "key": "7G5AXPP4RNG5DiZACneMZVenYEQ2GmVwcYUis8YrFHorQic5h8",
+                "weight": 2
+            }],
+            "accounts": [{
+                "permission": {
+                    "actor": "example2",
+                    "permission": "active"
+                },
+                "weight": 1
+            }, {
+                "permission": {
+                    "actor": "example3",
+                    "permission": "active"
+                },
+                "weight": 1
+            }],
+            "waits": []
+        }
+    },
+    {
+        "perm_name": "active",
+        "parent": "owner",
+        "required_auth": {
+            "threshold": 1,
+            "keys": [{
+                "key": "7NFuBesBKK5XHHLtzFxm7S57Eq11gUtndrsvq3Mt3XZNMTHfqc",
+                "weight": 1
+            }],
+            "accounts": [],
+            "waits": []
+        }
+    }
+]

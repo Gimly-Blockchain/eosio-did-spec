@@ -1,0 +1,34 @@
+{
+    "@context": "https://www.w3.org/ns/did/v1",
+    "id": "did:eosio:example:123",
+    "verificationMethod": [{
+        "id": "did:eosio:example:123#owner",
+        "type": "EOSIOPermission",
+        "controller": "did:example:123",
+        "threshold": 3,
+        "keys": [{
+            "weight": 1,
+            "publicKeyBase58": "7idX86zQ6M3mrzkGQ9MGHf4btSECmcTj4i8Le59ga7CpSpZYy5"
+        }, {
+            "weight": 2,
+            "publicKeyBase58": "7G5AXPP4RNG5DiZACneMZVenYEQ2GmVwcYUis8YrFHorQic5h8"
+        }],
+        "accounts": [{
+            "id": "did:eosio:example2#active",
+            "weight": 1
+        }, {
+            "id": "did:eosio:example3#active",
+            "weight": 1
+        }]
+    }, {
+        "id": "did:eosio:example:123#active",
+        "type": "EOSIOPermission",
+        "controller": "did:eosio:example:123",
+        "threshold": 1,
+        "keys": [{
+            "weight": 1,
+            "publicKeyBase58": "7NFuBesBKK5XHHLtzFxm7S57Eq11gUtndrsvq3Mt3XZNMTHfqc"
+        }],
+        "accounts": []
+    }]
+}
