@@ -379,12 +379,47 @@ Implementations of the EOSIO DID Method SHOULD implement a deactivate function w
 
 Consumers of a EOSIO DID Method implementation SHOULD override the default update behaviour if a different mechanism exists to deactivate an EOSIO DID.
 
+[Europechain](https://europechain.io) is an example EOSIO blockchain with a deactivate feature.
+
 # 5. Security considerations
 https://trustbloc.github.io/did-method-orb/#security-considerations
 https://did-tezos-draft.spruceid.com/#security-considerations
+
+## Eavesdropping
+
+## Replay
+
+## Message Insertion
+
+## Deletion
+
+## Modification
+
+## Man-in-the-Middle
+
+## Denial of Service
 
 Consideration of privledged accounts on chain which have the power to control account permissions.
 
 # 6. Privacy considerations
 https://trustbloc.github.io/did-method-orb/#privacy-considerations
 https://did-tezos-draft.spruceid.com/#privacy-considerations
+
+## Surveillance
+
+## Stored data compromise
+
+## Unsolicited traffic
+
+## Misattribution
+
+## Correlation
+
+## Identification
+
+## Secondary use
+
+## Disclosure
+
+## Exclusion
+
