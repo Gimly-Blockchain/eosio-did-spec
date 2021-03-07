@@ -92,9 +92,10 @@ The key words MAY, MUST, MUST NOT, OPTIONAL, RECOMMENDED, REQUIRED, SHOULD, and 
 # 2. Design goals
 
 The design goals of the EOSIO DID Method Specification are to:
-1. Create a method spec that can be used for all blockchain powered by the non-modified EOSIO protocol
-2. Support all relevant and non-depreciated features of EOSIO from version 2.0 (time weight permissions are not supported)
-3. Blockchains that have modified the EOSIO protocol are not explicitly supported, but may still be compatible and use this method spec if there have not been any changes to the EOSIO account, permissions and key protocol.
+1. Create a method spec that can be used for all blockchain powered by the non-modified EOSIO protocol.
+2. Support all relevant and non-depreciated features of EOSIO from version 2.0 (time weight permissions are not supported).
+3. Support public, private and hybrid permission EOSIO blockchains.
+4. Blockchains that have modified the EOSIO protocol are not explicitly supported, but may still be compatible and use this method spec if there have not been any changes to the EOSIO account, permissions and key protocol.
 
 # 3. DID Method Schema: did:eosio
 
@@ -214,10 +215,9 @@ If the top level EOSIO account permission does delegates control to another acco
 
 ## 5.2 Verification Methods
 
-TODO see [Verification Conditions](https://docs.google.com/document/d/1hxEMQxfNuB6Elmd6V-9bEt0kZqSx-DULycn6CjOpMYs)
+**TODO see [Verification Conditions](https://docs.google.com/document/d/1hxEMQxfNuB6Elmd6V-9bEt0kZqSx-DULycn6CjOpMYs)**
 
-TODO key types: k1, r1, wa
-https://developers.eos.io/manuals/eosjs/latest/API-Reference/enums/_eosjs_numeric_.keytype
+**TODO key types: k1, r1, wa https://developers.eos.io/manuals/eosjs/latest/API-Reference/enums/_eosjs_numeric_.keytype**
 
 ## 5.3 Verification Relationships
 
@@ -257,7 +257,7 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
 
 ## 5.1 Example DID Document
 
-TODO key type Ed25519VerificationKey and publicKeyBase58 need to be checked.
+**TODO key type Ed25519VerificationKey and publicKeyBase58 need to be checked.**
 
 ### 5.1.1 Simple account
 ```json
@@ -351,18 +351,39 @@ TODO key type Ed25519VerificationKey and publicKeyBase58 need to be checked.
 
 ## 4.1 Create
 
+EOSIO accounts are created with an on-chain transaction. The default is to call the ["newaccount" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.system/include/eosio.system/native.hpp#L178) on the system contract from an existing account on the blockchain. This action can be changed on each EOSIO chain, and upgraded over time. For some EOSIO systems, the on-chain account creation process is not openly accessible, and uses will use a different mechanism (such as an email and password request to an organisation) to create an account.
+
+Implementations of the EOSIO DID Method SHOULD implement the create operation according to the default ["newaccount" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.system/include/eosio.system/native.hpp#L178) defined in the eosio.bios contract. This function SHOULD be polymorphic and can be overridden by a consumer of the implementation. It is recommended that the EOSIO DID implementation constructor, or an options parameter can be used to achieve this.
+
+Consumers of a EOSIO DID Method implementation SHOULD override the default create behaviour if a different mechanism exists to create an EOSIO DID.
+
 ## 4.2 Read
-metadata for permissioned access?
+
+Resolution of a DID Document can be done by a service API. This may be an authorised or rate limited API. There are different types of EOSIO APIs as outlined in [Service Types](#541-Service-Types).
+
+**Question: should include description of metadata needed for authorized (permissioned) read access with private chains in mind?**
 
 ## 4.3 Update
 
+EOSIO account's permissions are updated with an on-chain transaction. The default is to call the ["updateauth" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.system/include/eosio.system/native.hpp#L194) on the system contract from your account. This action be changed on each EOSIO chain, and upgraded over time.
+
+Implementations of the EOSIO DID Method SHOULD implement the update operation according to the default ["updateauth" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.system/include/eosio.system/native.hpp#L194) defined in the eosio.bios contract. This function SHOULD be polymorphic and can be overridden by a consumer of the implementation. It is recommended that the EOSIO DID implementation constructor, or an options parameter can be used to achieve this.
+
+Consumers of a EOSIO DID Method implementation SHOULD override the default update behaviour if a different mechanism exists to update an EOSIO DID.
+
 ## 4.4 Deactivate
+
+EOSIO blockchains do not have a default mechanism to deactivate accounts.
+
+Implementations of the EOSIO DID Method SHOULD implement a deactivate function which throws an error. This function SHOULD be polymorphic and can be overridden by a consumer of the implementation. It is recommended that the EOSIO DID implementation constructor, or an options parameter can be used to achieve this.
+
+Consumers of a EOSIO DID Method implementation SHOULD override the default update behaviour if a different mechanism exists to deactivate an EOSIO DID.
 
 # 5. Security considerations
 https://trustbloc.github.io/did-method-orb/#security-considerations
 https://did-tezos-draft.spruceid.com/#security-considerations
 
-Consideration of privledged accounts on chain, power to control account permissions.
+Consideration of privledged accounts on chain which have the power to control account permissions.
 
 # 6. Privacy considerations
 https://trustbloc.github.io/did-method-orb/#privacy-considerations
