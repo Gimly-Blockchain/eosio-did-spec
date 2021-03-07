@@ -262,7 +262,8 @@ TODO key type Ed25519VerificationKey and publicKeyBase58 need to be checked.
 ### 5.1.1 Simple account
 ```json
 {
-    "@context": ["https://www.w3.org/ns/did/v1", "https://raw.githubusercontent.com/Gimly-Blockchain/eosio-did/master/docs/eosio-did-context.json"],
+    "@context": ["https://www.w3.org/ns/did/v1", 
+        "https://raw.githubusercontent.com/Gimly-Blockchain/eosio-did/master/docs/eosio-did-context.json"],
     "id": "did:eosio:telos:example",
     "verificationMethod": [{
         "id": "did:eosio:telos:example#owner",
@@ -284,10 +285,11 @@ TODO key type Ed25519VerificationKey and publicKeyBase58 need to be checked.
 }
 ```
 
-Multi-sig delegated account
+### 5.1.2 Multi-sig delegated account
 ```json
 {
-    "@context": ["https://www.w3.org/ns/did/v1", "https://raw.githubusercontent.com/Gimly-Blockchain/eosio-did/master/docs/eosio-did-context.json"],
+    "@context": ["https://www.w3.org/ns/did/v1",
+        "https://raw.githubusercontent.com/Gimly-Blockchain/eosio-did/master/docs/eosio-did-context.json"],
     "id": "did:eosio:telos:example",
     "verificationMethod": [{
         "id": "did:eosio:telos:example#owner",
@@ -329,7 +331,7 @@ Multi-sig delegated account
             "id": "did:eosio:telos:example#active-0",
             "controller": "did:eosio:telos:example",
             "type": ["VerificationMethod", "VerificationConditionWeightedThreshold"],
-            "threshold": 3,
+            "threshold": 1,
             "verificationMethod": [{
                     "weight": 1,
                     "verificationMethod": {
