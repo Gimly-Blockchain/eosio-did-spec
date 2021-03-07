@@ -76,7 +76,9 @@ The EOSIO protocol is the set of rules within the system cryptographically enfor
 
 In this way, each EOSIO blockchain can have significantly different rules while staying protocol compatible at the peer to peer network layer.
 
-Account creation and updates to account permissions (keys and delegates) are part of the rules defined through smart contracts. This means that different EOSIO chains will have different [DID method operations](https://w3c.github.io/did-core/#method-operations) (Create, Read, Update, Deactivate). To achive Design goal #1, the EOSIO DID method specification specifies that DID implementations should be generic and provide the default EOSIO method operation CRUD features while also allowing these to be customised (through a constructor or options parameters in function calls).
+Account creation and updates to account permissions (keys and delegates) are part of the rules defined through smart contracts. This means that different EOSIO chains will have different [DID method operations](https://w3c.github.io/did-core/#method-operations) (Create, Read, Update, Deactivate).
+
+To achive Design goal #1, the EOSIO DID method specification implementation SHOULD be generic and provide the default EOSIO method operation CRUD features while also allowing these to be customised by consumers of the implementation (through a constructor or options parameters in function calls). "Implementation" and "consumers" of this implementation will be the terminology used to explain how this design goal is achieved.
 
 More information:
 - [EOSIO Consensus Protocol](https://developers.eos.io/welcome/latest/protocol-guides/consensus_protocol
@@ -103,7 +105,7 @@ The [DID Method](https://w3c.github.io/did-core/#methods) schema can be consumed
 These two methods are mutually exclusive and will not clash with other DID methods as they are prefixed by the `did:eosio` method always. Is useful to have the registered chain name for popular chains that can be easily recognised, as well as a generic hash based identifier for used in the ever expanding ecosystem of many EOSIO blockchains.
 
 These are the properties that make up of the DID:
-- `{registered_eosio_eame}` is a pre-registered short name of the EOSIO chain that complies to the [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) (one to thirdteen lowercase English characters a-z or digits 1-5). This should be registered in the below table and additionally in the [EOSIO DID chain method registry](https://github.com/Gimly-Blockchain/eosio-did/blob/master/docs/eosio-did-chain-registry.json), including at least one service.
+- `{registered_eosio_eame}` is a pre-registered short name of the EOSIO chain that complies to the [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) (one to thirdteen lowercase English characters a-z or digits 1-5). This should be registered in the below table and additionally in the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did/blob/master/docs/eosio-did-chain-registry.json), including at least one service.
 - `{account_ame}` is the name of the account on the chain, also of [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) type.
 - `{chain_id}` is the hash of the genesis block of the chain, expressed in a 64 character string representing a hexidemimal number.
 
@@ -208,7 +210,7 @@ If the top level EOSIO account permission contains multiple authorisation mechan
 
 If the top level EOSIO account permission does delegates control to another account, then the DID Document "controller" MUST be the same as the DID.
 
-QUESTION: Is this right?
+**QUESTION: Is this right?**
 
 ## Verification Methods
 
@@ -225,10 +227,33 @@ Consumers of the EOSIO DID Method implementation are RECOMMENDED to extend the D
 
 ## Services
 
-Node type and version support
+At least one service SHOULD exist on a DID Document of LinkedDomains type. This can be used to resolve the DID and connect to the EOSIO chain through a supported API.
 
-service types
-https://w3c.github.io/did-spec-registries/#service-types
+Registered EOSIO chain names should add at least one servic in the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did/blob/master/docs/eosio-did-chain-registry.json).
+
+**QUESTION: should we and how can we specify the EOSIO chain protocol version support of the DID? e.g. is the chain 2.0 or 2.4 or 1.8 compatible...**
+
+### Service Types
+
+Multiple different APIs exist within the EOSIO ecosystem.
+1. [Nodeos HTTP API](https://developers.eos.io/manuals/eos/latest/nodeos/plugins/chain_api_plugin/api-reference/index) - default provided by Block One, author of EOSIO
+2. [Dfuse](https://dfuse.io) - provides websocket connection and history search features
+3. [Hyperion](https://hyperion.docs.eosrio.io) - provides history search features
+4. [EOSIO Light API](https://github.com/cc32d9/eosio_light_api) - provides history search features
+
+A [service type](https://w3c.github.io/did-spec-registries/#service-types) MUST be provided to describe the type for services related to access and transaction of an EOSIO blockchain.
+
+| API Name | Service type |
+| ------------- |-------------| 
+| Nodeos| EosioNodeos |
+| Dfuse Http Rest API | EosioDfuseRest |
+| Dfuse Websocket API | EosioDfuseWebsocket |
+| Hyperion | EosioHyperion |
+| EOSIO Light API | EosioLightAPI |
+
+See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did/blob/master/docs/eosio-did-chain-registry.json) for examples.
+
+**QUESTION: What is the "id" property of a service, what should we put?**
 
 # 4. Method Operations
 
@@ -244,6 +269,8 @@ metadata for permissioned access?
 # 4. Security considerations
 https://trustbloc.github.io/did-method-orb/#security-considerations
 https://did-tezos-draft.spruceid.com/#security-considerations
+
+Consideration of privledged accounts on chain, power to control account permissions.
 
 # 5. Privacy considerations
 https://trustbloc.github.io/did-method-orb/#privacy-considerations
