@@ -59,7 +59,7 @@ The growing SSI ecosystem is being adopted by industry and governments alike. De
 
 The EOSIO account abstraction is unique within the blockchain industry. There are two features relevant for a DID method:
 1. Accounts names are not bound to cryptographic material. Accounts names are chosen by the creator of the account, which may or may not be the entity that controls the account. Accounts names are short strings up to 13 characters making them memorisable.
-2. Each account can have one or more public-private key pairs which can be used to authorise and asserts data about that account. Keys are organised in a hierarchy tree, with human friendly labels for the permission name. Key material can be delegated to another EOSIO account. A weighted multi'signature scheme can be used. See combination.eosio.json for an example of a typical EOSIO account's key structure that includes both delegated and multi-signature requirements in the heirachial tree.
+2. Each account can have one or more public-private key pairs which can be used to authorise and asserts data about that account. Keys are organised in a hierarchy tree, with human friendly labels for the permission name. Key material can be delegated to another EOSIO account. A weighted multi'signature scheme can be used. See [combination.eosio.json](https://github.com/Gimly-Blockchain/eosio-did/blob/master/examples/combination.eosio.json) for an example of a typical EOSIO account's key structure that includes both delegated and multi-signature requirements in the heirachial tree.
 
 This key material and structure needs to be expressed in the "verificationMethod" property of the EOSIO DID. Numerous conversations have and are still taking place to create a DID compatible method spec. The result of this has been to create a new [verification method](https://w3c.github.io/did-core/#verification-methods) type called "VerificationCondition" which is currently under construction.
 
@@ -72,7 +72,7 @@ More information:
 
 ## EOSIO protocol and governance layers
 
-The EOSIO protocol is the set of rules within the system cryptographically enforced and historically auditable through a peer to peer network of computer nodes (servers). Fairly unique to the EOSIO protocol is that a large degree of these rules are defined in smart contract that live on the blockchain and can be highly-customised and upgraded over time.
+The EOSIO protocol is the set of rules within the system cryptographically enforced and historically auditable through a peer to peer network of computer nodes (servers). Fairly unique to the EOSIO protocol is that a large degree of these rules are defined in smart contract that live on the blockchain and can be highly-customised and upgraded over time ([source](https://medium.com/coinmonks/difference-between-eosio-software-and-eos-blockchain-13bcc57d1d9d)).
 
 In this way, each EOSIO blockchain can have significantly different rules while staying protocol compatible at the peer to peer network layer.
 
@@ -85,22 +85,51 @@ More information:
 
 # 2. Design goals
 
-Generic all eosio chains. Not support for forks.
-Interoperability EOSIO accounts.
+The design goals of the EOSIO DID Method Specification are to:
+1. Create a method spec that can be used for all blockchain powered by the non-modified EOSIO protocol
+2. Support all relevant and non-depreciated features of EOSIO from version 2.0 (time weight permissions are not supported)
+3. Blockchains that have modified the EOSIO protocol are not explicitly supported, but may still be compatible and use this method spec if there have not been any changes to the EOSIO account, permissions and key protocol.
 
 # 3. DID Method Schema: did:eosio
 
-2 allowed formats:
+The [DID Method](https://w3c.github.io/did-core/#methods) schema can be consumed in either of the following two formats:
+1. Registered chain name schema
+2. Chain-id schema
+
+These are the properties that make up of the DID:
+- `{registered_eosio_eame}` is a pre-registered short name of the EOSIO chain that complies to the [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) (one to thirdteen lowercase English characters a-z or digits 1-5). This should be registered in the below table and additionally in the [EOSIO DID chain method registry](https://github.com/Gimly-Blockchain/eosio-did/blob/master/docs/eosio-did-chain-registry.json), including at least one service.
+- `{account_ame}` is the name of the account on the chain, also of [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) type.
+- `{chain_id}` is the hash of the genesis block of the chain, expressed in a 64 character string representing a hexidemimal number.
 
 ## Registered chain name schema
-did:eosio:{registered_eosio_name}:{account_name}#{permission_name}
-did:eosio:telos:example#owner
 
-eosio did schema name registry + typescript arguments
+```
+did:eosio:{registered_eosio_name}:{account_name}
+registered_eosio_name = ([a-z][1-5]){1,13}
+account_name= ([a-z][1-5]){1,13}
+```
+
+e.g. `did:eosio:telos:example`
+
+Registered EOSIO chain summary:
+
+| Registered EOSIO Name | Chain Id |
+| ------------- |-------------| 
+| eos | aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906 |
+| telos | 4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11 |
+
 
 ## Chain id schema
-did:eosio:{chain_id}:{account_name}#{permission_name}
-did:eosio-f778….e8fe2e:example#active
+
+```
+did:eosio:{chain_id}:{account_name}
+{chain_id}:= ([a-z][0-9]){64}
+account_name= ([a-z][1-5]){1,13}
+```
+
+e.g. `did:eosio:4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11:example`
+<br>
+(equivalent to `did:eosio:telos:example`)
 
 ## DID URLs
 
@@ -145,6 +174,11 @@ https://developers.eos.io/manuals/eosjs/latest/API-Reference/enums/_eosjs_numeri
 ## Verification Relationships
 
 ## Services
+
+Node type and version support
+
+service types
+https://w3c.github.io/did-spec-registries/#service-types
 
 # 4. Method Operations
 
