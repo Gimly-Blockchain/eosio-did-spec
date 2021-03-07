@@ -61,7 +61,7 @@ The EOSIO account abstraction is unique within the blockchain industry. There ar
 1. Accounts names are not bound to cryptographic material. Accounts names are chosen by the creator of the account, which may or may not be the entity that controls the account. Accounts names are short strings up to 13 characters making them memorisable.
 2. Each account can have one or more public-private key pairs which can be used to authorise and asserts data about that account. Keys are organised in a hierarchy tree, with human friendly labels for the permission name. Key material can be delegated to another EOSIO account. A weighted multi'signature scheme can be used. See [combination.eosio.json](https://github.com/Gimly-Blockchain/eosio-did/blob/master/examples/combination.eosio.json) for an example of a typical EOSIO account's key structure that includes both delegated and multi-signature requirements in the heirachial tree.
 
-This key material and structure needs to be expressed in the "verificationMethod" property of the EOSIO DID. Numerous conversations have and are still taking place to create a DID compatible method spec. The result of this has been to create a new [verification method](https://w3c.github.io/did-core/#verification-methods) type called "VerificationCondition" which is currently under construction.
+This key material and structure needs to be expressed in the "verificationMethod" property of the EOSIO DID. Numerous conversations have and are still taking place to create a DID compatible method spec. The result of this has been to create a new [verification method](https://w3c.github.io/did-core/#verification-methods) type called "VerificationCondition" which is currently under construction [here](https://docs.google.com/document/d/1hxEMQxfNuB6Elmd6V-9bEt0kZqSx-DULycn6CjOpMYs/edit).
 
 More information:
 - [EOSIO Accounts and Permissions](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions)
@@ -83,6 +83,10 @@ More information:
 )
 - [DID core - multisig and delegated use case](https://docs.google.com/presentation/d/1vrmdOnN1tiE54e8h7HyegkJUGyrBUITVFNsAVedUwTE)
 
+## Conformance
+
+The key words MAY, MUST, MUST NOT, OPTIONAL, RECOMMENDED, REQUIRED, SHOULD, and SHOULD NOT in this document are to be interpreted as described in [BCP 14](https://tools.ietf.org/html/bcp14) when, and only when, they appear in all capitals, as shown here.
+
 # 2. Design goals
 
 The design goals of the EOSIO DID Method Specification are to:
@@ -103,12 +107,14 @@ These are the properties that make up of the DID:
 - `{account_ame}` is the name of the account on the chain, also of [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) type.
 - `{chain_id}` is the hash of the genesis block of the chain, expressed in a 64 character string representing a hexidemimal number.
 
+All propertie schemas are provided with a Regex specification.
+
 ## Registered chain name schema
 
 ```
 did:eosio:{registered_eosio_name}:{account_name}
 registered_eosio_name = ([a-z][1-5]){1,13}
-account_name= ([a-z][1-5]){1,13}
+account_name          = ([a-z][1-5]){1,13}
 ```
 
 e.g. `did:eosio:telos:example`
@@ -125,7 +131,7 @@ Registered EOSIO chain summary:
 
 ```
 did:eosio:{chain_id}:{account_name}
-{chain_id}:= ([a-z][0-9]){64}
+chain_id = ([a-z][0-9]){64}
 account_name= ([a-z][1-5]){1,13}
 ```
 
@@ -135,45 +141,87 @@ e.g. `did:eosio:4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11
 
 ## DID URLs
 
+### Path
+
+There is no standardised path schema yet, but there could be in the future.
+
+### Query
+
+There is no standardised query schema yet, but there could be in the future.
+
 ### Fragments
 
-Look you permission name
-permission.perm_name
+Fragments are used to dereference a DID URL to a specific [verification method](https://w3c.github.io/did-core/#verification-methods). Fragments for the EOSIO DID Method are used to identify the [EOSIO permission name](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#3-permissions) primarily. They can be additionally used to specify sub verification methods within a permission with indexes.
 
+The fragment string must begin with the permission name. You can optionally present indexes to look directly into the permission structure. Indexes are unsigned integers starting at 0.
 
-## Examples
+If a fragment is provided and the permission does not exist in the resolved account, an error MUST be thrown. e.g. `#active` framement for an account with no "active" permission.
+
+If a fragment is provided with indexes which do not exist within the permission of the resolved account, an error MUST be thrown. e.g. `#active-2` framement for an account with an "active" permission that only has one key for authorization (not two).
+
+Fragments can be used with either of the DID methods schemas.
 
 ```
-Equivalent DIDs on EOS:
-did:eosio:eos:eoscanadacom
-did:eosio:aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906:eoscanadacom
-
-Equivalent DIDs on Telos:
-did:eosio:telos:eosio.token
-did:eosio:4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11:eosio.token
-
-DID URL with permission "active"
-did:eosio:telos:b1#permisssion.active
+did:eosio:{chain_id}:{account_name}#permission_name}-{index_1}-{index_2}-...-{index_N}
+did:eosio:{registered_eosio_name}:{account_name}#{permission_name}-{index_1}-{index_2}-...-{index_N}
+registered_eosio_name = ([a-z][1-5]){1,13}
+chain_id              = ([a-z][0-9]){64}
+account_name          = ([a-z][1-5]){1,13}
+permission_name       = ([a-z][1-5]){1,13}
+index                 = (\d+)
 ```
 
+e.g. `did:eosio:telos:example#active`
+<br>
+e.g. `did:eosio:4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11:example#active`
+<br>
+(both equivalent)
 
-#permissions
+e.g. `did:eosio:telos:example#active-2-0`
+<br>
+e.g. `did:eosio:4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11:example#active-2-0`
+<br>
+(both equivalent)
 
 # 5. DID Document
 
 ## Identifiers
 
+As described in the "DID Method Schema: did:eosio"
+
 ### DID Subject
+
+The "subject" property does not need to be specified as it is always equal to the DID.
 
 ### DID Controller
 
+If the top level EOSIO account permission delegates control to another account, then the DID Document "controller" MUST be the EOSIO DID of that account. e.g. if "example" account has permission "owner" which is delegated to "example2" permission "active" then the DID Document would contain:
+
+```json
+{
+    "id": "did:eosio:telos:example:owner",
+    "controller": "did:eosio:telos:example2:active",
+}
+```
+
+If the top level EOSIO account permission contains multiple authorisation mechanisms including but not exclusively a delegation to another account, then the DID Document "controller" MAY be the EOSIO DID of that account.
+
+If the top level EOSIO account permission does delegates control to another account, then the DID Document "controller" MUST be the same as the DID.
+
+QUESTION: Is this right?
+
 ## Verification Methods
 
-type: EOSIOPermission
-types for keys k1, r1, wa
+TODO see [Verification Conditions](https://docs.google.com/document/d/1hxEMQxfNuB6Elmd6V-9bEt0kZqSx-DULycn6CjOpMYs)
+
+TODO key types: k1, r1, wa
 https://developers.eos.io/manuals/eosjs/latest/API-Reference/enums/_eosjs_numeric_.keytype
 
 ## Verification Relationships
+
+The way in which EOSIO account permissions are used is not specified in the protocol and cannot be extracted from the EOSIO blockchain. It is expected that applications that consume an EOSIO DID Method implementation will know more information about how the verification methods are used. This also applies to specific blockchains that consume the implementations.
+
+Consumers of the EOSIO DID Method implementation are RECOMMENDED to extend the DID Document's verification relationships with lists of fragments that point to verification methods adequate for relationships.
 
 ## Services
 
