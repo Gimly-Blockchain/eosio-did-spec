@@ -189,7 +189,7 @@ e.g. `did:eosio:4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11
 
 ## 5.1 Identifiers
 
-As described in the "DID Method Schema: did:eosio"
+As described in the [3. DID Method Schema: did:eosio](#3-DID-Method-Schema-dideosio).
 
 ### 5.2 DID Subject
 
@@ -254,6 +254,96 @@ A [service type](https://w3c.github.io/did-spec-registries/#service-types) MUST 
 See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did/blob/master/docs/eosio-did-chain-registry.json) for examples.
 
 **QUESTION: What is the "id" property of a service, what should we put?**
+
+## 5.1 Example DID Document
+
+TODO key type Ed25519VerificationKey and publicKeyBase58 need to be checked.
+
+### 5.1.1 Simple account
+```json
+{
+    "@context": ["https://www.w3.org/ns/did/v1", "https://raw.githubusercontent.com/Gimly-Blockchain/eosio-did/master/docs/eosio-did-context.json"],
+    "id": "did:eosio:telos:example",
+    "verificationMethod": [{
+        "id": "did:eosio:telos:example#owner",
+        "controller": "did:eosio:telos:example",
+        "type": "Ed25519VerificationKey",
+        "publicKeyBase58": "7idX86zQ6M3mrzkGQ9MGHf4btSECmcTj4i8Le59ga7CpSpZYy5"
+    }, {
+        "id": "did:eosio:telos:example#active",
+        "controller": "did:eosio:telos:example",
+        "type": ["VerificationMethod", "VerificationConditionParent"],
+        "parentIdUrl": "did:eosio:telos:example#owner",
+        "verificationMethod": {
+            "id": "did:eosio:telos:example#active-0",
+            "controller": "did:eosio:telos:example",
+            "type": "Ed25519VerificationKey",
+            "publicKeyBase58": "7NFuBesBKK5XHHLtzFxm7S57Eq11gUtndrsvq3Mt3XZNMTHfqc"
+        }
+    }]
+}
+```
+
+Multi-sig delegated account
+```json
+{
+    "@context": ["https://www.w3.org/ns/did/v1", "https://raw.githubusercontent.com/Gimly-Blockchain/eosio-did/master/docs/eosio-did-context.json"],
+    "id": "did:eosio:telos:example",
+    "verificationMethod": [{
+        "id": "did:eosio:telos:example#owner",
+        "controller": "did:eosio:telos:example",
+        "type": ["VerificationMethod", "VerificationConditionWeightedThreshold"],
+        "threshold": 3,
+        "verificationMethod": [{
+                "weight": 1,
+                "verificationMethod": {
+                    "id": "did:eosio:telos:example#owner-0",
+                    "controller": "did:eosio:telos:example",
+                    "type": "Ed25519VerificationKey",
+                    "publicKeyBase58": "7idX86zQ6M3mrzkGQ9MGHf4btSECmcTj4i8Le59ga7CpSpZYy5"
+                }
+            }, {
+                "weight": 2,
+                "verificationMethod": {
+                    "id": "did:eosio:telos:example#owner-1",
+                    "controller": "did:eosio:telos:example",
+                    "type": "Ed25519VerificationKey",
+                    "publicKeyBase58": "7G5AXPP4RNG5DiZACneMZVenYEQ2GmVwcYUis8YrFHorQic5h8"
+                }
+            }, {
+                "weight": 2,
+                "verificationMethod": {
+                    "id": "did:eosio:telos:example#owner-2",
+                    "controller": "did:eosio:telos:example",
+                    "type": ["VerificationMethod", "VerificationConditionWeightedThreshold"],
+                    "delegatedIdUrl": "did:eosio:telos:example2#active"
+                }
+            } 
+        ]
+    }, {
+        "id": "did:eosio:telos:example#active",
+        "controller": "did:eosio:telos:example",
+        "type": ["VerificationMethod", "VerificationConditionParent"],
+        "parentIdUrl": "did:eosio:telos:example#owner",
+        "verificationMethod": {
+            "id": "did:eosio:telos:example#active-0",
+            "controller": "did:eosio:telos:example",
+            "type": ["VerificationMethod", "VerificationConditionWeightedThreshold"],
+            "threshold": 3,
+            "verificationMethod": [{
+                    "weight": 1,
+                    "verificationMethod": {
+                        "id": "did:eosio:telos:example#active-0-0",
+                        "controller": "did:eosio:telos:example",
+                        "type": "Ed25519VerificationKey",
+                        "publicKeyBase58": "7NFuBesBKK5XHHLtzFxm7S57Eq11gUtndrsvq3Mt3XZNMTHfqc"
+                    }
+                }
+            ]
+        }
+    }]
+}
+```
 
 # 4. Method Operations
 
