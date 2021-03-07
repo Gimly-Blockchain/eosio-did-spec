@@ -10,7 +10,7 @@ Comments regarding this document are welcome. Please file issues directly on Git
 
 # 1. Introduction
 
-## Self Sovereign Identity (SSI)
+## 1.1 Self Sovereign Identity (SSI)
 Self sovereign identity is an evolving Internet architecture for how applications store and process identity data.  It is driven by the need for the need for data privacy over personal information.
 
 The architecture has two layers:
@@ -22,10 +22,10 @@ On top of the application layer, use cases in industry can be built which are th
 More information:
 - [SSI Architecture Stack and Community Efforts](https://github.com/decentralized-identity/decentralized-identity.github.io/blob/master/assets/ssi-architectural-stack--and--community-efforts-overview.pdf)
 
-## Decentralized Identfiers
+## 1.2 Decentralized Identfiers
 [Decentralized Identifiers](https://w3c.github.io/did-core) (DIDs) provide a standard datamodel to encapsulating unique identifiers and cryptographic material that can be used to interact, verify information from and contact entities. Each decentralised data layer protocol (such as EOSIO, Bitcoin, Hyperledger Indy) creates a DID Method Specification (not a W3C standard) which complies to the DID-core W3C standard. This DID Method Specification specifies the compliance datamodel used by the data protocol to encapsulates a unique identifier and the cryptographic material.
 
-## EOSIO
+## 1.3 EOSIO
 The EOSIO blockchain platform is the next-generation, open-source platform with industry-leading transaction speed and a flexible utility. As a blockchain platform, EOSIO is designed for enterprise-grade use cases and built for both public and private blockchain deployments. EOSIO is customizable to suit a wide range of business needs across industries with role-based permissions system and secure application transactions processing.
 
 Building distributed applications on EOSIO follows familiar development patterns and programming languages used for developing non-blockchain applications. For application developers, familiarity with the development environment results in a seamless user experience as it allows developers to use their preferred development tools.
@@ -45,7 +45,7 @@ Some of the groundbreaking features of EOSIO include:
 10. Efficient Energy Consumption
 11. Webauthn and Biometric Hardware Secured Keys Support
 
-## 1.1 Motivation and rationalle
+## 1.4 Motivation and rationalle
 
 The EOSIO technology ecosystem has been adopted by approximately 20 public blockchain is and over 100 private blockchains ([source](https://github.com/eosio-ecosystem/chains)). This includes a wide variety of industry applications.
 
@@ -55,7 +55,7 @@ The growing SSI ecosystem is being adopted by industry and governments alike. De
 3. Provide transparency of identities through standardisation.
 4. Improve security by bringing the SSI architecture model to EOSIO identity systems. This architecture ethically protects human rights while reducing cumbersome data regulation liability from organisations.
 
-## 1.2 EOSIO accounts
+## 1.5 EOSIO accounts
 
 The EOSIO account abstraction is unique within the blockchain industry. There are two features relevant for a DID method:
 1. Accounts names are not bound to cryptographic material. Accounts names are chosen by the creator of the account, which may or may not be the entity that controls the account. Accounts names are short strings up to 13 characters making them memorisable.
@@ -70,7 +70,7 @@ More information:
 - [DID core issue 965: Support for combination of threshold multi-sig and delegated verificationMethod](https://github.com/w3c/did-core/issues/695)
 - [DID core - multisig and delegated use case](https://docs.google.com/presentation/d/1vrmdOnN1tiE54e8h7HyegkJUGyrBUITVFNsAVedUwTE)
 
-## EOSIO protocol and governance layers
+## 1.6 EOSIO protocol and governance layers
 
 The EOSIO protocol is the set of rules within the system cryptographically enforced and historically auditable through a peer to peer network of computer nodes (servers). Fairly unique to the EOSIO protocol is that a large degree of these rules are defined in smart contract that live on the blockchain and can be highly-customised and upgraded over time ([source](https://medium.com/coinmonks/difference-between-eosio-software-and-eos-blockchain-13bcc57d1d9d)).
 
@@ -85,7 +85,7 @@ More information:
 )
 - [DID core - multisig and delegated use case](https://docs.google.com/presentation/d/1vrmdOnN1tiE54e8h7HyegkJUGyrBUITVFNsAVedUwTE)
 
-## Conformance
+## 1.7 Conformance
 
 The key words MAY, MUST, MUST NOT, OPTIONAL, RECOMMENDED, REQUIRED, SHOULD, and SHOULD NOT in this document are to be interpreted as described in [BCP 14](https://tools.ietf.org/html/bcp14) when, and only when, they appear in all capitals, as shown here.
 
@@ -111,7 +111,7 @@ These are the properties that make up of the DID:
 
 All propertie schemas are provided with a Regex specification.
 
-## Registered chain name schema
+## 3.1 Registered chain name schema
 
 ```
 did:eosio:{registered_eosio_name}:{account_name}
@@ -129,7 +129,7 @@ Registered EOSIO chain summary:
 | telos | 4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11 |
 
 
-## Chain id schema
+## 3.2 Chain id schema
 
 ```
 did:eosio:{chain_id}:{account_name}
@@ -141,17 +141,17 @@ e.g. `did:eosio:4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11
 <br>
 (equivalent to `did:eosio:telos:example`)
 
-## DID URLs
+## 3.3 DID URLs
 
-### Path
+### 3.3.1 Path
 
 There is no standardised path schema yet, but there could be in the future.
 
-### Query
+### 3.3.2 Query
 
 There is no standardised query schema yet, but there could be in the future.
 
-### Fragments
+### 3.3.3 Fragments
 
 Fragments are used to dereference a DID URL to a specific [verification method](https://w3c.github.io/did-core/#verification-methods). Fragments for the EOSIO DID Method are used to identify the [EOSIO permission name](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#3-permissions) primarily. They can be additionally used to specify sub verification methods within a permission with indexes.
 
@@ -187,15 +187,15 @@ e.g. `did:eosio:4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11
 
 # 5. DID Document
 
-## Identifiers
+## 5.1 Identifiers
 
 As described in the "DID Method Schema: did:eosio"
 
-### DID Subject
+### 5.2 DID Subject
 
 The "subject" property does not need to be specified as it is always equal to the DID.
 
-### DID Controller
+### 5.3 DID Controller
 
 If the top level EOSIO account permission delegates control to another account, then the DID Document "controller" MUST be the EOSIO DID of that account. e.g. if "example" account has permission "owner" which is delegated to "example2" permission "active" then the DID Document would contain:
 
@@ -212,20 +212,20 @@ If the top level EOSIO account permission does delegates control to another acco
 
 **QUESTION: Is this right?**
 
-## Verification Methods
+## 5.2 Verification Methods
 
 TODO see [Verification Conditions](https://docs.google.com/document/d/1hxEMQxfNuB6Elmd6V-9bEt0kZqSx-DULycn6CjOpMYs)
 
 TODO key types: k1, r1, wa
 https://developers.eos.io/manuals/eosjs/latest/API-Reference/enums/_eosjs_numeric_.keytype
 
-## Verification Relationships
+## 5.3 Verification Relationships
 
 The way in which EOSIO account permissions are used is not specified in the protocol and cannot be extracted from the EOSIO blockchain. It is expected that applications that consume an EOSIO DID Method implementation will know more information about how the verification methods are used. This also applies to specific blockchains that consume the implementations.
 
 Consumers of the EOSIO DID Method implementation are RECOMMENDED to extend the DID Document's verification relationships with lists of fragments that point to verification methods adequate for relationships.
 
-## Services
+## 5.4 Services
 
 At least one service SHOULD exist on a DID Document of LinkedDomains type. This can be used to resolve the DID and connect to the EOSIO chain through a supported API.
 
@@ -233,7 +233,7 @@ Registered EOSIO chain names should add at least one servic in the [EOSIO DID ch
 
 **QUESTION: should we and how can we specify the EOSIO chain protocol version support of the DID? e.g. is the chain 2.0 or 2.4 or 1.8 compatible...**
 
-### Service Types
+### 5.4.1 Service Types
 
 Multiple different APIs exist within the EOSIO ecosystem.
 1. [Nodeos HTTP API](https://developers.eos.io/manuals/eos/latest/nodeos/plugins/chain_api_plugin/api-reference/index) - default provided by Block One, author of EOSIO
@@ -257,23 +257,21 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
 
 # 4. Method Operations
 
-## Create
+## 4.1 Create
 
-## Read
+## 4.2 Read
 metadata for permissioned access?
 
-## Update
+## 4.3 Update
 
-## Deactivate
+## 4.4 Deactivate
 
-# 4. Security considerations
+# 5. Security considerations
 https://trustbloc.github.io/did-method-orb/#security-considerations
 https://did-tezos-draft.spruceid.com/#security-considerations
 
 Consideration of privledged accounts on chain, power to control account permissions.
 
-# 5. Privacy considerations
+# 6. Privacy considerations
 https://trustbloc.github.io/did-method-orb/#privacy-considerations
 https://did-tezos-draft.spruceid.com/#privacy-considerations
-
-# Referrences
