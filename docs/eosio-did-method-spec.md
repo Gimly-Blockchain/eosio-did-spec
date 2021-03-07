@@ -96,6 +96,8 @@ The [DID Method](https://w3c.github.io/did-core/#methods) schema can be consumed
 1. Registered chain name schema
 2. Chain-id schema
 
+These two methods are mutually exclusive and will not clash with other DID methods as they are prefixed by the `did:eosio` method always. Is useful to have the registered chain name for popular chains that can be easily recognised, as well as a generic hash based identifier for used in the ever expanding ecosystem of many EOSIO blockchains.
+
 These are the properties that make up of the DID:
 - `{registered_eosio_eame}` is a pre-registered short name of the EOSIO chain that complies to the [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) (one to thirdteen lowercase English characters a-z or digits 1-5). This should be registered in the below table and additionally in the [EOSIO DID chain method registry](https://github.com/Gimly-Blockchain/eosio-did/blob/master/docs/eosio-did-chain-registry.json), including at least one service.
 - `{account_ame}` is the name of the account on the chain, also of [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) type.
@@ -135,7 +137,7 @@ e.g. `did:eosio:4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11
 
 ### Fragments
 
-permission name
+Look you permission name
 permission.perm_name
 
 
