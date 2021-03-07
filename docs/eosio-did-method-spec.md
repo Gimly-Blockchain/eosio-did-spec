@@ -4,7 +4,7 @@ This document is not a W3C Standard nor is it on the W3C Standards Track. This i
 
 Comments regarding this document are welcome. Please file issues directly on Github.
 
-// TODO delete me
+**TODO check these and see if anything missing from ours...**
 - https://github.com/factom-protocol/FIS/blob/master/FIS/DID.md
 - https://github.com/decentralized-identity/ethr-did-resolver/blob/master/doc/did-method-spec.md
 
