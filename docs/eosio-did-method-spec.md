@@ -95,7 +95,8 @@ The design goals of the EOSIO DID Method Specification are to:
 1. Create a method spec that can be used for all blockchain powered by the non-modified EOSIO protocol.
 2. Support all relevant and non-depreciated features of EOSIO from version 2.0 (time weight permissions are not supported).
 3. Support public, private and hybrid permission EOSIO blockchains.
-4. Blockchains that have modified the EOSIO protocol are not explicitly supported, but may still be compatible and use this method spec if there have not been any changes to the EOSIO account, permissions and key protocol.
+4. Stay as close to the EOSIO protocol as possible, do not introduce EOSIO chain specific features to the method.
+5. Blockchains that have modified the EOSIO protocol are not explicitly supported, but may still be compatible and use this method spec if there have not been any changes to the EOSIO account, permissions and key protocol.
 
 # 3. DID Method Schema: did:eosio
 
@@ -351,9 +352,9 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
 
 ## 4.1 Create
 
-EOSIO accounts are created with an on-chain transaction. The default is to call the ["newaccount" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.system/include/eosio.system/native.hpp#L178) on the system contract from an existing account on the blockchain. This action can be changed on each EOSIO chain, and upgraded over time. For some EOSIO systems, the on-chain account creation process is not openly accessible, and uses will use a different mechanism (such as an email and password request to an organisation) to create an account.
+EOSIO accounts are created with an on-chain transaction. The default is to call the ["newaccount" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.bios/include/eosio.bios/eosio.bios.hpp#L190) on the system contract from an existing account on the blockchain. This action can be changed on each EOSIO chain, and upgraded over time. For some EOSIO systems, the on-chain account creation process is not openly accessible, and uses will use a different mechanism (such as an email and password request to an organisation) to create an account.
 
-Implementations of the EOSIO DID Method SHOULD implement the create operation according to the default ["newaccount" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.system/include/eosio.system/native.hpp#L178) defined in the eosio.bios contract. This function SHOULD be polymorphic and can be overridden by a consumer of the implementation. It is recommended that the EOSIO DID implementation constructor, or an options parameter can be used to achieve this.
+Implementations of the EOSIO DID Method SHOULD implement the create operation according to the default ["newaccount" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.bios/include/eosio.bios/eosio.bios.hpp#L190) defined in the eosio.bios contract. This function SHOULD be polymorphic and can be overridden by a consumer of the implementation. It is recommended that the EOSIO DID implementation constructor, or an options parameter can be used to achieve this.
 
 Consumers of a EOSIO DID Method implementation SHOULD override the default create behaviour if a different mechanism exists to create an EOSIO DID.
 
@@ -365,9 +366,9 @@ Resolution of a DID Document can be done by a service API. This may be an author
 
 ## 4.3 Update
 
-EOSIO account's permissions are updated with an on-chain transaction. The default is to call the ["updateauth" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.system/include/eosio.system/native.hpp#L194) on the system contract from your account. This action be changed on each EOSIO chain, and upgraded over time.
+EOSIO account's permissions are updated with an on-chain transaction. The default is to call the ["updateauth" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.bios/include/eosio.bios/eosio.bios.hpp#L205) on the system contract from your account. This action be changed on each EOSIO chain, and upgraded over time.
 
-Implementations of the EOSIO DID Method SHOULD implement the update operation according to the default ["updateauth" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.system/include/eosio.system/native.hpp#L194) defined in the eosio.bios contract. This function SHOULD be polymorphic and can be overridden by a consumer of the implementation. It is recommended that the EOSIO DID implementation constructor, or an options parameter can be used to achieve this.
+Implementations of the EOSIO DID Method SHOULD implement the update operation according to the default ["updateauth" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.bios/include/eosio.bios/eosio.bios.hpp#L205) defined in the eosio.bios contract. This function SHOULD be polymorphic and can be overridden by a consumer of the implementation. It is recommended that the EOSIO DID implementation constructor, or an options parameter can be used to achieve this.
 
 Consumers of a EOSIO DID Method implementation SHOULD override the default update behaviour if a different mechanism exists to update an EOSIO DID.
 
