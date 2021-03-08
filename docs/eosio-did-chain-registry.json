@@ -6,7 +6,7 @@
                 "id": "greymass.com",
                 "type": [
                     "LinkedDomains",
-                    "nodeos"
+                    "EosioNodeos"
                 ],
                 "serviceEndpoint": {
                     "origins": "https://eos.greymass.com"
@@ -45,6 +45,21 @@
                 ],
                 "serviceEndpoint": {
                     "origins": "https://telos.greymass.com"
+                }
+            }
+        ]
+    },
+    "europechain": {
+        "chainId": "f778f7d2f124b110e0a71245b310c1d0ac1a0edd21f131c5ecb2e2bc03e8fe2e",
+        "service": [
+            {
+                "id": "cryptolions.io",
+                "type": [
+                    "LinkedDomains",
+                    "EosioNodeos"
+                ],
+                "serviceEndpoint": {
+                    "origins": "https://api.xec.cryptolions.io"
                 }
             }
         ]
