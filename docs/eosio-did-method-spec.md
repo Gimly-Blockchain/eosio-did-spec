@@ -96,6 +96,7 @@ The design goals of the EOSIO DID Method Specification are to:
 2. Support all relevant and non-depreciated features of EOSIO from version 2.0 (time weight permissions are not supported).
 3. Support public, private and hybrid permission EOSIO blockchains.
 4. Stay as close to the EOSIO protocol as possible, do not introduce EOSIO chain specific features to the method.
+5. Avoid the need for EOSIO compatible chains to need to register separate official DID Methods. Due to the ever expanding number of EOSIO chains, this could quickly be a large number and would cause problems to the way DIDs are registered and consumed in the SSI ecosystem.
 
 # 3. DID Method Schema: did:eosio
 
