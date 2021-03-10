@@ -383,24 +383,76 @@ Consumers of a EOSIO DID Method implementation SHOULD override the default updat
 [Europechain](https://europechain.io) is an example EOSIO blockchain with a deactivate feature.
 
 # 5. Security considerations
-https://trustbloc.github.io/did-method-orb/#security-considerations
-https://did-tezos-draft.spruceid.com/#security-considerations
+
 
 ## Eavesdropping
+For public EOSIO blockchains, all transactions, history and stateful information is public.
+
+For private and hybrid EOSIO blockchains, access to the data via API or P2P protocol are limited and permission based depending on the blockchain. Private EOSIO blockchains SHOULD use encrypted data transport between clients and nodes. 
 
 ## Replay
 
+All EOSIO DID method default operations are done through an on-chain transaction are protected by including the blockchain's chain id and a recent block header hash in the transaction (called [Transaction as Proof of Stake](https://eosio.stackexchange.com/questions/2362/what-is-transaction-as-proof-of-stake-tapos-and-when-would-a-smart-contract)).
+
+EOSIO DID consumer MAY override the method operations with off-chain mechanisms which may be susceptible to replay attacks. This only applies to permissioned EOSIO blockchains.
+
 ## Message Insertion
+
+All EOSIO DID method default operations are done through an on-chain transaction and signed by the accounts authorized private key. There is no way for a party without these keys to act on behalf of the DID.
+
+Note that EOSIO accounts may delegate authorisation control to other EOSIO accounts on the same blockchain, who are then authorised to send certain transactions on behalf of them. This consent is done through a transaction on chain and must be signed by an existing authorised key of the EOSIO account. Delegation can be revoked at any time by the EOSIO account.
+
+EOSIO DID consumer MAY override the method operations with off-chain mechanisms which may be susceptible to message insertion attacks. This only applies to permissioned EOSIO blockchains.
 
 ## Deletion
 
+Deletion is not a feature of the EOSIO P2P protocol.
+
+Functionality to allow users to delete their account can be superimposed over the chain at the API level (such as what is done by Europechain). In such a case, the deletion mechanism will be controlled by such an implementation (for Europechain, deletion is an on-chain transaction signed by the EOSIO account's authorized keys)
+
 ## Modification
+
+All EOSIO DID's updated through an on-chainon-chain transaction signed by the accounts authorized private key. There is no way for a party without these keys to act on behalf of the DID.
+
+Note that EOSIO accounts may delegate authorisation control to other EOSIO accounts on the same blockchain, who are then authorised to send certain transactions on behalf of them. This consent is done through a transaction on chain and must be signed by an existing authorised key of the EOSIO account. Delegation can be revoked at any time by the EOSIO account.
+
+EOSIO DID consumer MAY override the method operations with off-chain mechanisms which may be susceptible to modification attacks. This only applies to permissioned EOSIO blockchains.
 
 ## Man-in-the-Middle
 
+All EOSIO DID method default operations are done through an on-chain transaction signed by the accounts authorized private key. An attacker that gains access to a signed transaction message before it is submitted, cannot duplicate this on the same or other chains due to unique in the transaction that is checked for uniqueness by the EOSIO protocol. Each transaction has an expiration time, usually set to 30 seconds, and the attacker may choose to delay the submission of this transaction up until the expiration time.
+
 ## Denial of Service
 
-Consideration of privledged accounts on chain which have the power to control account permissions.
+The ability to limit the service of an EOSIO blockchain depends on its infrastructure, governance structure and server API figuration. DID controllers and subjects should be aware of these fundamentals to assess the security of the system.
+
+### Infrastucture
+Infrastructure can be centralised or decentralised.
+
+Blockchains can be configured to have multiple independent organisations that run EOSIO peer nodes. More independence block producers running infrastructure increases infrastucture availability reducing service outages and reduces governance attacks (discussed next).
+
+Each node can also be configured to have redundancy capacity through the blockvault_client_plugin. This can be used for centralised blockchains, or for individual block producers in a centralised blockchain.
+
+### Governance of the blockchain service
+The EOSIO protocol and DID method is governance agnostic. EOSIO blockchains can be Proof of Authority (default), Proof of Stake, Delegated Proof of Stake and more ([source](https://github.com/theblockstalk/eosio-contracts/tree/master/governance)) modifying the system contract.
+
+An EOSIO blockchain can be attacked by vulnerabilities in the governance model. Examples:
+- block producers that run a Proof of Authority blockchain may be bribed
+- block producers slots for a Proof of Stake blockchain can be bought
+- block producers slots for a Delegated Proof of Stake blockchain can be bought
+
+If enough of the EOSIO blockchain governance is compromised, the blockchain service as a whole may be compromised. DID subjects and controllers should feel comfortable with the governance model of the EOSIO blockchain they are using. EOSIO blockchains may use internal or external regulation to enforce protection of their governance system.
+
+### Governance of the blockchain's privledged features
+
+Privledged EOSIO account are able to submit transactions to the EOSIO blockchain that bypass signature validation checks ([source](https://developers.eos.io/manuals/eosio.contracts/v1.9/key-concepts/system)). The intention of this feature is to be used to administrate the blockchain in consensys with all of the operators of the EOSIO chain. Such an administration task may be recovered a users account in the event they lose their private key.
+
+Each EOSIO chain implements what accounts are a privileged and what privileged actions they can peform. This is limitd to be accessible only by the current block producers and only in consensus.
+
+By bypassing signature validation checks, privileged accounts can submit transactions on behalf of any other account on the same EOSIO blockchain. This includes updating the DID Document. It is for this reason that the governance of the EOSIO chain must be trusted.
+
+### API
+If an API service fails completely, a DID will need to find another service to connect to the EOSIO blockchain.
 
 # 6. Privacy considerations
 https://trustbloc.github.io/did-method-orb/#privacy-considerations
