@@ -454,6 +454,9 @@ By bypassing signature validation checks, privileged accounts can submit transac
 ### API
 If an API service fails completely, a DID will need to find another service to connect to the EOSIO blockchain.
 
+## Residual Risks
+The system's overall security and integrity can only as good as the DID controller's ability to manage private keys. This is made easier with the ability for wallets to create heirachies of keys and complex structures. This is still a difficult problem for organizations and people.
+
 # 6. Privacy considerations
 https://trustbloc.github.io/did-method-orb/#privacy-considerations
 https://did-tezos-draft.spruceid.com/#privacy-considerations
