@@ -274,14 +274,9 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
     }, {
         "id": "did:eosio:telos:example#active",
         "controller": "did:eosio:telos:example",
-        "type": ["VerificationMethod", "VerificationConditionParent"],
+        "type": ["VerifiableCondition", "VerifiableConditionRelationship", "Ed25519VerificationKey"],
         "parentIdUrl": "did:eosio:telos:example#owner",
-        "verificationMethod": {
-            "id": "did:eosio:telos:example#active-0",
-            "controller": "did:eosio:telos:example",
-            "type": "Ed25519VerificationKey",
-            "publicKeyBase58": "7NFuBesBKK5XHHLtzFxm7S57Eq11gUtndrsvq3Mt3XZNMTHfqc"
-        }
+        "publicKeyBase58": "7NFuBesBKK5XHHLtzFxm7S57Eq11gUtndrsvq3Mt3XZNMTHfqc"
     }]
 }
 ```
@@ -295,7 +290,7 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
     "verificationMethod": [{
         "id": "did:eosio:telos:example#owner",
         "controller": "did:eosio:telos:example",
-        "type": ["VerificationMethod", "VerificationConditionWeightedThreshold"],
+        "type": ["VerifiableCondition", "VerifiableConditionWeightedThreshold"],
         "threshold": 3,
         "verificationMethod": [{
                 "weight": 1,
@@ -318,7 +313,7 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
                 "verificationMethod": {
                     "id": "did:eosio:telos:example#owner-2",
                     "controller": "did:eosio:telos:example",
-                    "type": ["VerificationMethod", "VerificationConditionWeightedThreshold"],
+                    "type": ["VerifiableCondition", "VerifiableConditionDelegated"],
                     "delegatedIdUrl": "did:eosio:telos:example2#active"
                 }
             } 
@@ -326,24 +321,19 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
     }, {
         "id": "did:eosio:telos:example#active",
         "controller": "did:eosio:telos:example",
-        "type": ["VerificationMethod", "VerificationConditionParent"],
+        "type": ["VerifiableCondition", "VerifiableConditionRelationship", "VerificationConditionWeightedThreshold"],
         "parentIdUrl": "did:eosio:telos:example#owner",
-        "verificationMethod": {
-            "id": "did:eosio:telos:example#active-0",
-            "controller": "did:eosio:telos:example",
-            "type": ["VerificationMethod", "VerificationConditionWeightedThreshold"],
-            "threshold": 1,
-            "verificationMethod": [{
-                    "weight": 1,
-                    "verificationMethod": {
-                        "id": "did:eosio:telos:example#active-0-0",
-                        "controller": "did:eosio:telos:example",
-                        "type": "Ed25519VerificationKey",
-                        "publicKeyBase58": "7NFuBesBKK5XHHLtzFxm7S57Eq11gUtndrsvq3Mt3XZNMTHfqc"
-                    }
+        "threshold": 1,
+        "verificationMethod": [{
+                "weight": 1,
+                "verificationMethod": {
+                    "id": "did:eosio:telos:example#active-0",
+                    "controller": "did:eosio:telos:example",
+                    "type": "Ed25519VerificationKey",
+                    "publicKeyBase58": "7NFuBesBKK5XHHLtzFxm7S57Eq11gUtndrsvq3Mt3XZNMTHfqc"
                 }
-            ]
-        }
+            }
+        ]
     }]
 }
 ```
@@ -463,15 +453,28 @@ https://did-tezos-draft.spruceid.com/#privacy-considerations
 
 ## Surveillance
 
+Surveillance may be possible through a combination of compromised Tezos full nodes and indexer services supporting TZIP-19 resolution. This may be mitigated by choosing full nodes and indexer services that are trusted or self-hosted.
+
 ## Stored data compromise
+
+All stored data in the DID manager is considered public (at the time of rotation). Stored data in the off-chain rotation events are subject to the underlying system architectures and constraints, which are not specified in this document.
 
 ## Unsolicited traffic
 
+It is possible that DID controllers populate a service endpoint in a smart contract containing a service not desired to be publicized by its owner. It is also possible that populating a service endpoint causes unsolicited traffic from unintended parties due to its public nature and ability to be indexed and explored on a block explorer.
+
 ## Misattribution
+
+For the resolution and updates with respect to the DID Document itself, there is very little risk of attributing activity to the wrong key pair due to the cryptographic requirements for authentication and authorization of rotations.
 
 ## Correlation
 
+The DID could be correlated to on-chain Tezos activity and other activity such as the issuance, presentation, storage, and verification of Verifiable Credentials if an attacker has access to those data. It is therefore important for DID users to carefully consider what the use cases of their DID. It may be beneficial for users to generate new Tezos DIDs as frequently as per transaction if wallets support this direction such as by using hierarchical deterministic (HD) wallet algorithms.
+
 ## Identification
+
+The user could add a service that would link to another of their identities.
+
 
 ## Secondary use
 
