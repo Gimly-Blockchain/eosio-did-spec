@@ -1,7 +1,7 @@
 # Status of This Document
 This document is not a W3C Standard nor is it on the W3C Standards Track. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.
 
-Comments regarding this document are welcome. Please file issues directly on Github.
+Comments regarding this document are welcome. Please file issues and PRs directly on Github.
 
 Editors:
 - Jack Tanner, Blockchain and SSI Developer | Gimly jack@gimly.io
@@ -34,7 +34,7 @@ Support for account and key models of the following protocols:
 - KERI: [keripy/blob/master/tests/core/test_coring.py](https://github.com/decentralized-identity/keripy/blob/master/tests/core/test_coring.py#L2523)
 - Hyperledger Indy: [Indy DID Method](https://hackmd.io/@icZC4epNSnqBbYE0hJYseA/S1eUS2BQw)
 
-# The VerifiableCondition type
+# The VerifiableCondition Type
 
 ```json
 {
@@ -51,7 +51,7 @@ The “verificationMethod” property is a singular or array value of other veri
 
 The “verificationMethod” can use a [relative DID URL](https://w3c.github.io/did-core/#relative-did-urls) to link to other “verificationMethod”s to avoid duplication in the same DID Document.
 
-# Example
+## Example
 This would check that the signatures match AND( OR( #1-1-1, #1-1-2), #1-2). Note the different types.
 
 ```json
@@ -147,4 +147,25 @@ Fulfilled if the sum of the weights of the verificationMethods that are fulfille
 }
 ```
 
-Fulfilled if the verificationMethod found by dereferencing the DID URL “delegatedIdUrl” is fulfilled. The dereferenced DID document MUST contain a verificationMethod found using the DID URL, if not then throw an error. If more than one verificationMethod is found then throw an error.
+Fulfilled if the verificationMethod found by dereferencing the DID URL “delegatedIdUrl” is fulfilled. The dereferenced DID document MUST contain a verificationMethod found using the DID URL. The dereferenced DID document MUST NOT contain multiple verificationMethods found using the DID URL.
+
+## Relationship
+```json
+{
+    "id": "did:example:123#10",
+    "controller": "did:example:123",
+    "type": ["VerifiableCondition", "VerifiableConditionRelationship"],
+    "parentIdUrl": [],
+    "childIdUrl": [],
+    "siblingIdUrl": [],
+}
+```
+
+Has not fulfillment requirements.
+
+Expresses a relationship between different verificationMethods. One of the properties "parentIdUrl", "childIdUrl" or "siblingIdUrl" MUST be present. Each property can be a DID URL or an array of DID URLs.
+
+# Privacy Considerations
+
+# Security Considerations
+
