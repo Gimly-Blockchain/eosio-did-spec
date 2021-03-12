@@ -216,7 +216,7 @@ If the top level EOSIO account permission does delegates control to another acco
 
 ## 5.2 Verification Methods
 
-**TODO see [Verification Conditions](https://docs.google.com/document/d/1hxEMQxfNuB6Elmd6V-9bEt0kZqSx-DULycn6CjOpMYs)**
+**TODO see [Verification Conditions](https://github.com/Gimly-Blockchain/verifiable-conditions)**
 
 **TODO key types: k1, r1, wa https://developers.eos.io/manuals/eosjs/latest/API-Reference/enums/_eosjs_numeric_.keytype**
 
