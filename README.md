@@ -4,7 +4,7 @@ This document is not a W3C Standard nor is it on the W3C Standards Track. This i
 
 Please join the EOSIO Identity Working Group's weekly meetings where we, the EOSIO community, discuss identity on EOSIO chains and progress work such as this DID specification and it's implementation.
 
-[Join the EOSIO Identity Working Group](https://www.gimly.io/blog/the-eosio-identity-working-group)
+**[Join the EOSIO Identity Working Group](https://www.gimly.io/blog/the-eosio-identity-working-group)**
 
 Comments regarding this document are welcome. Please file issues and PRs directly on Github. Contributors are recognized through adding commits to the code base.
 
