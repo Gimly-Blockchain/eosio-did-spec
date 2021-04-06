@@ -2,9 +2,11 @@
 # Status of This Document
 This document is not a W3C Standard nor is it on the W3C Standards Track. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.
 
-Comments regarding this document are welcome. Please file issues and PRs directly on Github. If you wish to be more actively involved with write access, please contact jack@gimly.io.
+Please join the EOSIO Identity Working Group's weekly meetings where we, the EOSIO community, discuss identity on EOSIO chains and progress work such as this DID specification and it's implementation.
 
-Contributors are recognized through adding commits to the code base.
+[Join the EOSIO Identity Working Group](https://www.gimly.io/blog/the-eosio-identity-working-group)
+
+Comments regarding this document are welcome. Please file issues and PRs directly on Github. Contributors are recognized through adding commits to the code base.
 
 Contributors:
 - Jack Tanner, Blockchain and SSI Developer | Gimly jack@gimly.io
