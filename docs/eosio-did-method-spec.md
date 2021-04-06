@@ -2,11 +2,14 @@
 # Status of This Document
 This document is not a W3C Standard nor is it on the W3C Standards Track. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.
 
-Comments regarding this document are welcome. Please file issues directly on Github.
+Comments regarding this document are welcome. Please file issues and PRs directly on Github. If you wish to be more actively involved with write access, please contact jack@gimly.io.
 
-**TODO check these and see if anything missing from ours...**
-- https://github.com/factom-protocol/FIS/blob/master/FIS/DID.md
-- https://github.com/decentralized-identity/ethr-did-resolver/blob/master/doc/did-method-spec.md
+Contributors are recognized through adding commits to the code base.
+
+Contributors:
+- Jack Tanner, Blockchain and SSI Developer | Gimly jack@gimly.io
+
+TODO turn into a Re-spec page and host https://respec.org/docs
 
 # 1. Introduction
 
@@ -448,37 +451,52 @@ If an API service fails completely, a DID will need to find another service to c
 The system's overall security and integrity can only as good as the DID controller's ability to manage private keys. This is made easier with the ability for wallets to create heirachies of keys and complex structures. This is still a difficult problem for organizations and people.
 
 # 6. Privacy considerations
-https://trustbloc.github.io/did-method-orb/#privacy-considerations
-https://did-tezos-draft.spruceid.com/#privacy-considerations
-
 ## Surveillance
 
-Surveillance may be possible through a combination of compromised Tezos full nodes and indexer services supporting TZIP-19 resolution. This may be mitigated by choosing full nodes and indexer services that are trusted or self-hosted.
+In a public EOSIO network, all communication is visible by watching the blockchain. In a private network both the peer-to-peer and the node to client communication should be encrypted to ensure data surveillance protection.
 
 ## Stored data compromise
 
-All stored data in the DID manager is considered public (at the time of rotation). Stored data in the off-chain rotation events are subject to the underlying system architectures and constraints, which are not specified in this document.
+The DID Document data and history is stored on in the blockchain state and can be done through access to a synchronising EOSIO blockchain node in the network. In a public network, this can be done through public node APIs or by running a node that synchronises with the public network. A privates network has restrictions on the peer-to-peer synchronisation and APIs.
 
 ## Unsolicited traffic
 
-It is possible that DID controllers populate a service endpoint in a smart contract containing a service not desired to be publicized by its owner. It is also possible that populating a service endpoint causes unsolicited traffic from unintended parties due to its public nature and ability to be indexed and explored on a block explorer.
+Create, update and (if supported) deactivate DID operations require transactions signed by the private keys only owned by the DID controller and cannot be forged. Public API nodes do not identify read operations to DIDs, and may receive unsolicited traffic from unintended parties. Public and private APIs do enforce IP or registered API account based rate-limiting to ensure service is not affected by this.
 
 ## Misattribution
 
-For the resolution and updates with respect to the DID Document itself, there is very little risk of attributing activity to the wrong key pair due to the cryptographic requirements for authentication and authorization of rotations.
+Create, update and (if supported) deactivate DID operations require transactions signed by the private keys only owned by the DID controller and cannot be forged.
 
 ## Correlation
 
-The DID could be correlated to on-chain Tezos activity and other activity such as the issuance, presentation, storage, and verification of Verifiable Credentials if an attacker has access to those data. It is therefore important for DID users to carefully consider what the use cases of their DID. It may be beneficial for users to generate new Tezos DIDs as frequently as per transaction if wallets support this direction such as by using hierarchical deterministic (HD) wallet algorithms.
+The DID Document data and history is stored on in the blockchain state and can be done through access to a synchronising EOSIO blockchain node in the network. State and historic data from interaction of the DID with smart contracts on the blockchain is also accessible through a blockchain node which can be directly correlated with the DID. It is therefore important for DID users to carefully consider what applications they use that had on-chain data to the blockchains.
+
+Private blockchains will ensure that this correlation cannot be done publicly, but can still be done between permissioned and peer-to-peer nodes.
 
 ## Identification
 
-The user could add a service that would link to another of their identities.
+If personal information is added to the blockchain, potentially a viable credential, this can be permanently accessed through through access to a synchronising EOSIO blockchain node in the network. With enough identifying information, and identity can be deduced.
 
+For this reason, it is very strongly suggested that personal information is not added to the blockchain, even in private networks.
 
 ## Secondary use
 
+EOSIO blockchain software does not make secondary use of transaction data other than for the purpose of synchronising the blockchain and maintaining the state.
+
+DID users should carefully consider blockchain applications, which many store additional information about the DID, the identity of the DID and other data in off-chain data storage systems. Application providers should clearly state data storage policy and purposes and users should consider this when deciding to use such applications.
+
 ## Disclosure
+
+DID users of public blockchains should understand that on-chain data is public and does not have limitations on its use or disclosure.
+
+Private blockchains may enforce data privacy restrictions which should be stated and considered by the DID user.
 
 ## Exclusion
 
+DID users of public blockchains should understand that on-chain data is public and does not have limitations on its use or disclosure.
+
+Private blockchains me support the ability for DID users to control exclusion of their data. This is done on a per-blockchain basis.
+
+# Reference implementations
+
+[https://github.com/Gimly-Blockchain/eosio-did](https://github.com/Gimly-Blockchain/eosio-did)
