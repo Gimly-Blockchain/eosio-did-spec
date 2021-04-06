@@ -62,7 +62,7 @@ The growing SSI ecosystem is being adopted by industry and governments alike. De
 
 The EOSIO account abstraction is unique within the blockchain industry. There are two features relevant for a DID method:
 1. Accounts names are not bound to cryptographic material. Accounts names are chosen by the creator of the account, which may or may not be the entity that controls the account. Accounts names are short strings up to 13 characters making them memorisable.
-2. Each account can have one or more public-private key pairs which can be used to authorise and asserts data about that account. Keys are organised in a hierarchy tree, with human friendly labels for the permission name. Key material can be delegated to another EOSIO account. A weighted multi'signature scheme can be used. See [combination.eosio.json](https://github.com/Gimly-Blockchain/eosio-did/blob/master/examples/combination.eosio.json) for an example of a typical EOSIO account's key structure that includes both delegated and multi-signature requirements in the heirachial tree.
+2. Each account can have one or more public-private key pairs which can be used to authorise and asserts data about that account. Keys are organised in a hierarchy tree, with human friendly labels for the permission name. Key material can be delegated to another EOSIO account. A weighted multi'signature scheme can be used. See [combination.eosio.json](https://github.com/Gimly-Blockchain/eosio-did-spec/blob/master/examples/combination.eosio.json) for an example of a typical EOSIO account's key structure that includes both delegated and multi-signature requirements in the heirachial tree.
 
 This key material and structure needs to be expressed in the "verificationMethod" property of the EOSIO DID. Numerous conversations have and are still taking place to create a DID compatible method spec. The result of this has been to create a new [verification method](https://w3c.github.io/did-core/#verification-methods) type called "VerificationCondition" which is currently under construction [here](https://docs.google.com/document/d/1hxEMQxfNuB6Elmd6V-9bEt0kZqSx-DULycn6CjOpMYs/edit).
 
@@ -110,7 +110,7 @@ The [DID Method](https://w3c.github.io/did-core/#methods) schema can be consumed
 These two methods are mutually exclusive and will not clash with other DID methods as they are prefixed by the `did:eosio` method always. Is useful to have the registered chain name for popular chains that can be easily recognised, as well as a generic hash based identifier for used in the ever expanding ecosystem of many EOSIO blockchains.
 
 These are the properties that make up of the DID:
-- `{registered_eosio_eame}` is a pre-registered short name of the EOSIO chain that complies to the [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) (one to thirdteen lowercase English characters a-z, period . or digits 1-5). This should be registered in the below table and additionally in the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did/blob/master/eosio-did-chain-registry.json), including at least one service.
+- `{registered_eosio_eame}` is a pre-registered short name of the EOSIO chain that complies to the [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) (one to thirdteen lowercase English characters a-z, period . or digits 1-5). This should be registered in the below table and additionally in the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-spec/blob/master/eosio-did-chain-registry.json), including at least one service.
 - `{account_ame}` is the name of the account on the chain, also of [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) type.
 - `{chain_id}` is the hash of the genesis block of the chain, expressed in a 64 character string representing a hexidemimal number.
 
@@ -233,7 +233,7 @@ Consumers of the EOSIO DID Method implementation are RECOMMENDED to extend the D
 
 At least one service SHOULD exist on a DID Document of LinkedDomains type. This can be used to resolve the DID and connect to the EOSIO chain through a supported API.
 
-Registered EOSIO chain names should add at least one servic in the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did/blob/master/eosio-did-chain-registry.json).
+Registered EOSIO chain names should add at least one servic in the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-spec/blob/master/eosio-did-chain-registry.json).
 
 **QUESTION: should we and how can we specify the EOSIO chain protocol version support of the DID? e.g. is the chain 2.0 or 2.4 or 1.8 compatible...**
 
@@ -255,7 +255,7 @@ A [service type](https://w3c.github.io/did-spec-registries/#service-types) MUST 
 | Hyperion | EosioHyperion |
 | EOSIO Light API | EosioLightAPI |
 
-See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did/blob/master/eosio-did-chain-registry.json) for examples.
+See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-spec/blob/master/eosio-did-chain-registry.json) for examples.
 
 **QUESTION: What is the "id" property of a service, what should we put?**
 
@@ -267,7 +267,7 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
 ```json
 {
     "@context": ["https://www.w3.org/ns/did/v1", 
-        "https://raw.githubusercontent.com/Gimly-Blockchain/eosio-did/master/eosio-did-context.json"],
+        "https://raw.githubusercontent.com/Gimly-Blockchain/eosio-did-spec/master/eosio-did-context.json"],
     "id": "did:eosio:telos:example",
     "verificationMethod": [{
         "id": "did:eosio:telos:example#owner",
@@ -288,7 +288,7 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
 ```json
 {
     "@context": ["https://www.w3.org/ns/did/v1",
-        "https://raw.githubusercontent.com/Gimly-Blockchain/eosio-did/master/eosio-did-context.json"],
+        "https://raw.githubusercontent.com/Gimly-Blockchain/eosio-did-spec/master/eosio-did-context.json"],
     "id": "did:eosio:telos:example",
     "verificationMethod": [{
         "id": "did:eosio:telos:example#owner",
