@@ -499,4 +499,7 @@ Private blockchains me support the ability for DID users to control exclusion of
 
 # Reference implementations
 
-[https://github.com/Gimly-Blockchain/eosio-did](https://github.com/Gimly-Blockchain/eosio-did)
+TODO make public
+
+- eosio-did-resolver (javascript): [https://github.com/Gimly-Blockchain/eosio-did-resolver](https://github.com/Gimly-Blockchain/eosio-did-resolver)
+- eosio-did (javascript): [https://github.com/Gimly-Blockchain/eosio-did](https://github.com/Gimly-Blockchain/eosio-did)
