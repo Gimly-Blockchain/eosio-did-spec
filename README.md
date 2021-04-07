@@ -64,9 +64,9 @@ The growing SSI ecosystem is being adopted by industry and governments alike. De
 
 The EOSIO account abstraction is unique within the blockchain industry. There are two features relevant for a DID method:
 1. Accounts names are not bound to cryptographic material. Accounts names are chosen by the creator of the account, which may or may not be the entity that controls the account. Accounts names are short strings up to 13 characters making them memorisable.
-2. Each account can have one or more public-private key pairs which can be used to authorise and asserts data about that account. Keys are organised in a hierarchy tree, with human friendly labels for the permission name. Key material can be delegated to another EOSIO account. A weighted multi'signature scheme can be used. See [combination.eosio.json](https://github.com/Gimly-Blockchain/eosio-did-spec/blob/master/examples/combination.eosio.json) for an example of a typical EOSIO account's key structure that includes both delegated and multi-signature requirements in the heirachial tree.
+2. Each account can have one or more public-private key pairs which can be used to authorise and asserts data about that account. Keys are organised in a hierarchy tree, with human friendly labels for the permission name. Key material can be delegated to another EOSIO account. A weighted multi-signature scheme can be used. See [combination.eosio.json](https://github.com/Gimly-Blockchain/eosio-did-spec/blob/master/examples/combination.eosio.json) for an example of a typical EOSIO account's key structure that includes both delegated and multi-signature requirements in the heirachial tree.
 
-This key material and structure needs to be expressed in the "verificationMethod" property of the EOSIO DID. Numerous conversations have and are still taking place to create a DID compatible method spec. The result of this has been to create a new [verification method](https://w3c.github.io/did-core/#verification-methods) type called "VerificationCondition" which is currently under construction [here](https://docs.google.com/document/d/1hxEMQxfNuB6Elmd6V-9bEt0kZqSx-DULycn6CjOpMYs/edit).
+This key material and structure needs to be expressed in the "verificationMethod" property of the EOSIO DID Document. Numerous conversations have and are still taking place to create a DID compatible method spec. The result of this has been to create a new [verification method](https://w3c.github.io/did-core/#verification-methods) type called [Verifiable Conditions](https://github.com/Gimly-Blockchain/verifiable-conditions) which has been drafted and is being reviewed by the W3C Credentials Communiy Group.
 
 More information:
 - [EOSIO Accounts and Permissions](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions)
@@ -74,6 +74,7 @@ More information:
 - [DID core issue 964: Support for delegated verificationMethods](https://github.com/w3c/did-core/issues/694)
 - [DID core issue 965: Support for combination of threshold multi-sig and delegated verificationMethod](https://github.com/w3c/did-core/issues/695)
 - [DID core - multisig and delegated use case](https://docs.google.com/presentation/d/1vrmdOnN1tiE54e8h7HyegkJUGyrBUITVFNsAVedUwTE)
+- [Verifiable Conditions](https://docs.google.com/document/d/1hxEMQxfNuB6Elmd6V-9bEt0kZqSx-DULycn6CjOpMYs/edit)
 
 ## 1.6 EOSIO protocol and governance layers
 
@@ -83,7 +84,7 @@ In this way, each EOSIO blockchain can have significantly different rules while 
 
 Account creation and updates to account permissions (keys and delegates) are part of the rules defined through smart contracts. This means that different EOSIO chains will have different [DID method operations](https://w3c.github.io/did-core/#method-operations) (Create, Read, Update, Deactivate).
 
-To achive Design goal #1, the EOSIO DID method specification implementation SHOULD be generic and provide the default EOSIO method operation CRUD features while also allowing these to be customised by consumers of the implementation (through a constructor or options parameters in function calls). "Implementation" and "consumers" of this implementation will be the terminology used to explain how this design goal is achieved.
+To achive the design goals, the EOSIO DID method specification implementation SHOULD be generic and provide the default EOSIO method operation CRUD features while also allowing these to be customised by consumers of the implementation (through a constructor or options parameters in function calls). "Implementation" and "consumers" of this implementation will be the terminology used to explain how this design goal is achieved.
 
 More information:
 - [EOSIO Consensus Protocol](https://developers.eos.io/welcome/latest/protocol-guides/consensus_protocol
@@ -97,7 +98,7 @@ The key words MAY, MUST, MUST NOT, OPTIONAL, RECOMMENDED, REQUIRED, SHOULD, and 
 # 2. Design goals
 
 The design goals of the EOSIO DID Method Specification are to:
-1. Create a method spec that can be used for all blockchain powered by the non-modified EOSIO protocol. Blockchains that have modified the EOSIO protocol are not explicitly supported, but may still be compatible and use this method spec if there have not been any incompatible changes to the EOSIO protocol such as the account, permissions and key features.
+1. Create a method spec that can be used for all blockchain powered by the the unmodified EOSIO protocol. Blockchains that have modified the EOSIO protocol are not explicitly supported, but may still be compatible and use this method spec if there have not been any incompatible changes to the EOSIO protocol such as the account, permissions and key features.
 2. Support all relevant and non-depreciated features of EOSIO from version 2.0 (time weight permissions are not supported).
 3. Support public, private and hybrid permission EOSIO blockchains.
 4. Stay as close to the EOSIO protocol as possible, do not introduce EOSIO chain specific features to the method.
@@ -166,7 +167,7 @@ The fragment string must begin with the permission name. You can optionally pres
 
 If a fragment is provided and the permission does not exist in the resolved account, an error MUST be thrown. e.g. `#active` framement for an account with no "active" permission.
 
-If a fragment is provided with indexes which do not exist within the permission of the resolved account, an error MUST be thrown. e.g. `#active-2` framement for an account with an "active" permission that only has one key for authorization (not two).
+If a fragment is provided with indexes which do not exist within the permission of the resolved account, an error MUST be thrown. e.g. `#active-1` framement for an account with an "active" permission that only has one key for authorization (not two).
 
 Fragments can be used with either of the DID methods schemas.
 
@@ -215,14 +216,23 @@ If the top level EOSIO account permission delegates control to another account, 
 
 If the top level EOSIO account permission contains multiple authorisation mechanisms including but not exclusively a delegation to another account, then the DID Document "controller" MAY be the EOSIO DID of that account.
 
-If the top level EOSIO account permission does delegates control to another account, then the DID Document "controller" MUST be the same as the DID.
+If the top level EOSIO account permission delegates control to another account, then the DID Document "controller" MUST be the same as the DID.
 
 **QUESTION: Is this right?**
 
 ## 5.2 Verification Methods
 
-**TODO see [Verification Conditions](https://github.com/Gimly-Blockchain/verifiable-conditions)**
+The verification Methods are populated using information from the EOSIO account's permission structure. This can be obtained by requesting the accounts data from any of the API services.
 
+This permission data is presented in the DID document using the ["VerifiableCondition"](https://github.com/Gimly-Blockchain/verifiable-conditions) type. This new verification type is [currently under review](https://github.com/w3c-ccg/community/issues/188) by the W3C credentials community group is expected to become a W3C standard.
+
+All permissions except the root permission should be of type "VerifiableConditionRelationship" with `parentIdUrl` property sets to the parent property DID URL with fragment.
+
+Permissions using a weighted threshold MUST use "VerifiableConditionWeightedThreshold" as seen in example [5.1.2 Multi-sig delegated account](#512-multi-sig-delegated-account) or, if all weights are 1, then  "VerifiableConditionThreshold". If no threshold condition exists, these types CAN still be used, but alternatively CAN be skiped to simplify the DID Document as seen in example [5.1.1 Simple account](#511-simple-account).
+
+Delegated permissions MUST use "VerifiableConditionDelegated".
+
+Public keys are of type
 **TODO key types: k1, r1, wa https://developers.eos.io/manuals/eosjs/latest/API-Reference/enums/_eosjs_numeric_.keytype**
 
 ## 5.3 Verification Relationships
