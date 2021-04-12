@@ -20,12 +20,14 @@ Self sovereign identity is an evolving Internet architecture for how application
 
 The architecture has two layers:
 1. Identity - me management of accessible public key infrastructure and identifies. [Decentralized Identifiers](https://w3c.github.io/did-core) is the W3C standard that allows this. Compliance with this standard allows application layers to interoperate without a need to understand the base layer decentralised protocols that power identities.
-2. Application - use of the identity layer to interact and provide meaningful, secure and verifiable data communications and interaction. The [Verifiable Credentials](https://w3c.github.io/vc-data-model) W3C standard is the most prominent and adopted standard here which is a data structure and message protocol allowing people and organisations to securely and in a verifiable way send and verify information about themselves "credentials" to each other.
+2. Application - use of the identity layer to interact and provide meaningful, secure and verifiable data communications and interaction. The [Verifiable Credentials](https://w3c.github.io/vc-data-model) W3C standard is the most prominent and adopted standard here which is a data structure and message protocol allowing people and organisations to securely and in a verifiable way send and verify information about themselves "credentials" to each other. [DIDComm](https://identity.foundation/didcomm-messaging/spec) is another important application layer that uses DID methods to communicate between SSI identities.
 
 On top of the application layer, use cases in industry can be built which are then interoperable and independent of base protocols. The standards focused heavily on data privacy and security.
 
 More information:
 - [SSI Architecture Stack and Community Efforts](https://github.com/decentralized-identity/decentralized-identity.github.io/blob/master/assets/ssi-architectural-stack--and--community-efforts-overview.pdf)
+- [Self Sovereign Identity](https://www.identitymanagementinstitute.org/self-sovereign-identity)
+- [Self-Sovereign Identity: The Ultimate Beginners Guide!](https://tykn.tech/self-sovereign-identity)
 
 ## 1.2 Decentralized Identfiers
 [Decentralized Identifiers](https://w3c.github.io/did-core) (DIDs) provide a standard datamodel to encapsulating unique identifiers and cryptographic material that can be used to interact, verify information from and contact entities. Each decentralised data layer protocol (such as EOSIO, Bitcoin, Hyperledger Indy) creates a DID Method Specification (not a W3C standard) which complies to the DID-core W3C standard. This DID Method Specification specifies the compliance datamodel used by the data protocol to encapsulates a unique identifier and the cryptographic material.
@@ -371,7 +373,7 @@ Resolution of a DID Document can be done by a service API. This may be an author
 
 ## 4.3 Update
 
-EOSIO account's permissions are updated with an on-chain transaction. The default is to call the ["updateauth" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.bios/include/eosio.bios/eosio.bios.hpp#L205) on the system contract from your account. This action be changed on each EOSIO chain, and upgraded over time.
+EOSIO account's permissions are updated with an on-chain transaction. The default is to call the ["updateauth" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.bios/include/eosio.bios/eosio.bios.hpp#L205) on the system contract from your account. This action can be changed on each EOSIO chain, and upgraded over time.
 
 Implementations of the EOSIO DID Method SHOULD implement the update operation according to the default ["updateauth" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.bios/include/eosio.bios/eosio.bios.hpp#L205) defined in the eosio.bios contract. This function SHOULD be polymorphic and can be overridden by a consumer of the implementation. It is recommended that the EOSIO DID implementation constructor, or an options parameter can be used to achieve this.
 
