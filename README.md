@@ -60,7 +60,7 @@ The growing SSI ecosystem is being adopted by industry and governments alike. De
 1. Interoperability with the rest of the SSI ecosystem. This allows EOSIO based identities to be consumed by goverments and industries alike. It provides external interoperability outside of EOSIO.
 2. Interoperability with other EOSIO based identities. Due to the large number of EOSIO chains this could be a great way to strengthen the collaboration between all of these projects.
 3. Provide transparency of identities through standardisation.
-4. Improve security by bringing the SSI architecture model to EOSIO identity systems. This architecture ethically protects human rights while reducing cumbersome data regulation liability from organisations.
+4. Improve security and privacy by bringing the SSI architecture model to EOSIO identity systems. This architecture ethically protects human rights while reducing cumbersome data regulation liability from organisations.
 
 ## 1.5 EOSIO accounts
 
@@ -102,7 +102,7 @@ The key words MAY, MUST, MUST NOT, OPTIONAL, RECOMMENDED, REQUIRED, SHOULD, and 
 The design goals of the EOSIO DID Method Specification are to:
 1. Create a method spec that can be used for all blockchain powered by the the unmodified EOSIO protocol. Blockchains that have modified the EOSIO protocol are not explicitly supported, but may still be compatible and use this method spec if there have not been any incompatible changes to the EOSIO protocol such as the account, permissions and key features.
 2. Support all relevant and non-depreciated features of EOSIO from version 2.0 (time weight permissions are not supported).
-3. Support public, private and hybrid permission EOSIO blockchains.
+3. Support public (EOS, Telos, Europechain, WAX and more), private and hybrid permission EOSIO blockchains.
 4. Stay as close to the EOSIO protocol as possible, do not introduce EOSIO chain specific features to the method.
 5. Avoid the need for EOSIO compatible chains to need to register separate official DID Methods. Due to the ever expanding number of EOSIO chains, this could quickly be a large number and would cause problems to the way DIDs are registered and consumed in the SSI ecosystem.
 
