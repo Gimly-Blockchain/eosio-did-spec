@@ -139,6 +139,8 @@ Registered EOSIO chain summary:
 | telos | 4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11 |
 | europechain | f778f7d2f124b110e0a71245b310c1d0ac1a0edd21f131c5ecb2e2bc03e8fe2e |
 
+**QUESTION: Should we allow subnames and/symbols e.g eos:jungle-testnet?**
+
 ## 3.2 Chain id schema
 
 ```
