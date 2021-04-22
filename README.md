@@ -108,38 +108,51 @@ The design goals of the EOSIO DID Method Specification are to:
 
 # 3. DID Method Schema: did:eosio
 
-The [DID Method](https://w3c.github.io/did-core/#methods) schema can be consumed in either of the following two formats:
+The EOSIO [method-specific DID schema](https://w3c.github.io/did-core/#methods) allows for two distinct method-specific-id schemata. 
 1. Registered chain name schema
 2. Chain-id schema
 
-These two methods are mutually exclusive and will not clash with other DID methods as they are prefixed by the `did:eosio` method always. Is useful to have the registered chain name for popular chains that can be easily recognised, as well as a generic hash based identifier for used in the ever expanding ecosystem of many EOSIO blockchains.
+While one uses the plain chain-id, represented as a generic hash-based identifier for a specific chain, the other utilizes a pre-registered human readable chain name that acts in a similar fashion to domain names and only points toward the actual chain-id. In both cases the chain specific identifier is followed by the name of an account on that chain, separated by a colon. 
 
-These are the properties that make up of the DID:
-- `{registered_eosio_eame}` is a pre-registered short name of the EOSIO chain that complies to the [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) (one to thirdteen lowercase English characters a-z, period . or digits 1-5). This should be registered in the below table and additionally in the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-spec/blob/master/eosio-did-chain-registry.json), including at least one service.
-- `{account_ame}` is the name of the account on the chain, also of [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) type.
+```
+did:eosio:{chain_id/registered_chain_name}:{account-name}
+```
+
+Due to the strict requirements registered chain names have to adhere to, a clash with the chain id schema is impossible.
+
+These are the properties that make up an EOSIO DID:
+- `{registered_eosio_name}` is a pre-registered name of the EOSIO chain consisting of one or more colon separated name blocks, each complying to the [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) (one to thirdteen lowercase English characters a-z, period . or digits 1-5). This should be registered in the below table and additionally in the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-spec/blob/master/eosio-did-chain-registry.json), including at least one service.
+- `{account_name}` is the name of the account on the chain, also of [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) type.
 - `{chain_id}` is the hash of the genesis block of the chain, expressed in a 64 character string representing a hexidemimal number.
 
-All propertie schemas are provided with a Regex specification.
+All property schemas are provided with a Regex specification.
 
 ## 3.1 Registered chain name schema
 
 ```
 did:eosio:{registered_eosio_name}:{account_name}
-registered_eosio_name = ([a-z][1-5].){1,13}
+registered_eosio_name = ([a-z][1-5].){1,13}(:([a-z][1-5].){1,13})*
 account_name          = ([a-z][1-5].){1,13}
 ```
 
 e.g. `did:eosio:telos:example`
+
+Each chain name may consist of multiple name blocks, separated by colons. This could be used to represent hierarchical relationships as in domains and subdomains.
+
+e.g. `did:eosio:eos:testnet:jungle:example`
+
+
 
 Registered EOSIO chain summary:
 
 | Registered EOSIO Name | Chain Id |
 | ------------- |-------------| 
 | eos | aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906 |
+| eos:testnet:jungle | 2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840 |
 | telos | 4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11 |
 | europechain | f778f7d2f124b110e0a71245b310c1d0ac1a0edd21f131c5ecb2e2bc03e8fe2e |
 
-**QUESTION: Should we allow subnames and/symbols e.g eos:jungle-testnet?**
+**QUESTION: Should we allow multiple subnames e.g eos:testnet:jungle?**
 
 ## 3.2 Chain id schema
 
