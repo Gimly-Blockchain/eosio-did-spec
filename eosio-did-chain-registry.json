@@ -34,6 +34,21 @@
             }
         ]
     },
+    "eos:testnet:jungle": {
+        "chainId": "2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840",
+        "service": [
+            {
+                "id": "cryptolions.com",
+                "type": [
+                    "LinkedDomains",
+                    "EosioNodeos"
+                ],
+                "serviceEndpoint": {
+                    "origins": "https://jungle3.cryptolions.io"
+                }
+            }
+        ]
+    },
     "telos": {
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
         "service": [

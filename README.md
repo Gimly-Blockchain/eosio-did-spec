@@ -148,6 +148,7 @@ Registered EOSIO chain summary:
 | Registered EOSIO Name | Chain Id |
 | ------------- |-------------| 
 | eos | aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906 |
+| eos:testnet:jungle | 2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840 |
 | telos | 4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11 |
 | europechain | f778f7d2f124b110e0a71245b310c1d0ac1a0edd21f131c5ecb2e2bc03e8fe2e |
 
