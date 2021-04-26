@@ -286,8 +286,6 @@ A [service type](https://w3c.github.io/did-spec-registries/#service-types) MUST 
 
 See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-spec/blob/master/eosio-did-chain-registry.json) for examples.
 
-**QUESTION: What is the "id" property of a service, what should we put?**
-
 ## 5.1 Example DID Document
 
 **TODO key type Ed25519VerificationKey and publicKeyBase58 need to be checked.**
