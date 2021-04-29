@@ -226,16 +226,14 @@ If the top level EOSIO account permission delegates control to another account, 
 
 ```json
 {
-    "id": "did:eosio:telos:example:owner",
-    "controller": "did:eosio:telos:example2:active",
+    "id": "did:eosio:telos:example#owner",
+    "controller": "did:eosio:telos:example2#active",
 }
 ```
 
 If the top level EOSIO account permission contains multiple authorisation mechanisms including but not exclusively a delegation to another account, then the DID Document "controller" MAY be the EOSIO DID of that account.
 
 If the top level EOSIO account permission delegates control to another account, then the DID Document "controller" MUST be the same as the DID.
-
-**QUESTION: Is this right?**
 
 ## 5.2 Verification Methods
 
@@ -382,7 +380,7 @@ Consumers of a EOSIO DID Method implementation SHOULD override the default creat
 
 Resolution of a DID Document can be done by a service API. This may be an authorised or rate limited API. There are different types of EOSIO APIs as outlined in [Service Types](#541-Service-Types).
 
-**Question: should include description of metadata needed for authorized (permissioned) read access with private chains in mind?**
+**Placeholder: Description of method of creating an authorized (permissioned) read request with private EOSIO blockchains in mind.**
 
 ## 4.3 Update
 
