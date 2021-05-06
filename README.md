@@ -2,16 +2,17 @@
 # Status of This Document
 This document is not a W3C Standard nor is it on the W3C Standards Track. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.
 
-Please join the EOSIO Identity Working Group's weekly meetings where we, the EOSIO community, discuss identity on EOSIO chains and progress work such as this DID specification and it's implementation.
+# Contributions
 
-**[Join the EOSIO Identity Working Group](https://www.gimly.io/blog/the-eosio-identity-working-group)**
+The EOSIO Identity Working Group is an open working group where we, the EOSIO community, discuss identity on EOSIO chains and progress work such as this DID specification and it's implementation. We have a weekly meeting and a Slack channel.
+
+**[Join the EOSIO Identity Working Group](https://www.gimly.io/eosio-id-wg)**
 
 Comments regarding this document are welcome. Please file issues and PRs directly on Github. Contributors are recognized through adding commits to the code base.
 
 Contributors:
-- Jack Tanner, Blockchain and SSI Developer | Gimly jack@gimly.io
-
-TODO turn into a Re-spec page and host https://respec.org/docs
+- Jack Tanner <jack@gimly.io>
+- Jonas Walter
 
 # 1. Introduction
 
@@ -151,8 +152,6 @@ Registered EOSIO chain summary:
 | eos:testnet:jungle | 2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840 |
 | telos | 4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11 |
 | europechain | f778f7d2f124b110e0a71245b310c1d0ac1a0edd21f131c5ecb2e2bc03e8fe2e |
-
-**QUESTION: Should we allow multiple subnames e.g eos:testnet:jungle?**
 
 ## 3.2 Chain id schema
 
