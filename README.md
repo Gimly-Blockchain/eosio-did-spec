@@ -221,18 +221,7 @@ The "subject" property does not need to be specified as it is always equal to th
 
 ### 5.3 DID Controller
 
-If the top level EOSIO account permission delegates control to another account, then the DID Document "controller" MUST be the EOSIO DID of that account. e.g. if "example" account has permission "owner" which is delegated to "example2" permission "active" then the DID Document would contain:
-
-```json
-{
-    "id": "did:eosio:telos:example#owner",
-    "controller": "did:eosio:telos:example2#active",
-}
-```
-
-If the top level EOSIO account permission contains multiple authorisation mechanisms including but not exclusively a delegation to another account, then the DID Document "controller" MAY be the EOSIO DID of that account.
-
-If the top level EOSIO account permission delegates control to another account, then the DID Document "controller" MUST be the same as the DID.
+As described in the "Decentralized Identifiers Spec" [5.1.2 DID Controller](https://www.w3.org/TR/did-core/#did-controller). MUST conform to the rules in [3.1 Registered chain name schema](#3.1-Registered-chain-name-schema).
 
 ## 5.2 Verification Methods
 
