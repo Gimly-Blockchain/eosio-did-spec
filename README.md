@@ -221,7 +221,7 @@ The "subject" property does not need to be specified as it is always equal to th
 
 ### 5.3 DID Controller
 
-As described in the "Decentralized Identifiers Spec" [5.1.2 DID Controller](https://www.w3.org/TR/did-core/#did-controller). MUST conform to the rules in [3.1 Registered chain name schema](#3.1-Registered-chain-name-schema).
+As described in the "Decentralized Identifiers Spec" [5.1.2 DID Controller](https://www.w3.org/TR/did-core/#did-controller). MUST conform to the rules in [3.1 Registered chain name schema](#31-Registered-chain-name-schema).
 
 ## 5.2 Verification Methods
 
