@@ -13,6 +13,15 @@ Comments regarding this document are welcome. Please file issues and PRs directl
 Contributors:
 - Jack Tanner <jack@gimly.io>
 - Jonas Walter
+- Julius Rahaus
+- Sana Rauf
+
+<!-- Make sure images have 75 pixel height -->
+[![Gimly](./assets/gimly.jpg)](https://gimly.io)
+![](./assets/filler.png)
+[![Europechain](./assets/europechain.png)](https://europechain.io)
+![](./assets/filler.png)
+[![Block One](./assets/blockone.png)](https://block.one)
 
 # 1. Introduction
 
