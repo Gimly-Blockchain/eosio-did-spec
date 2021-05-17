@@ -253,7 +253,6 @@ Registered EOSIO chain names should add at least one service in the [EOSIO DID c
 
 ```json
 {
-    [...],
     "eos:testnet:jungle": {
         "chainId": "2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840",
         "service": [
@@ -263,8 +262,7 @@ Registered EOSIO chain names should add at least one service in the [EOSIO DID c
                 "serviceEndpoint": "https://jungle3.cryptolions.io"
             }
         ]
-    },
-    [...]
+    }
 }
 ```
 
