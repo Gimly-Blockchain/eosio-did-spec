@@ -122,7 +122,7 @@ did:eosio:{chain_id/registered_chain_name}:{account-name}
 Due to the strict requirements registered chain names have to adhere to, a clash with the chain id schema is impossible.
 
 These are the properties that make up an EOSIO DID:
-- `{registered_eosio_name}` is a pre-registered name of the EOSIO chain consisting of one or more colon separated name blocks, each complying to the [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) (one to thirdteen lowercase English characters a-z, period . or digits 1-5). This should be registered in the below table and additionally in the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-spec/blob/master/eosio-did-chain-registry.json), including at least one service.
+- `{registered_eosio_name}` is a pre-registered name of the EOSIO chain consisting of one or more colon separated name blocks, each complying to the [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) (one to thirdteen lowercase English characters a-z, period . or digits 1-5). This should be registered in the below table and additionally in the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-resolver/blob/master/eosio-did-chain-registry.json), including at least one service.
 - `{account_name}` is the name of the account on the chain, also of [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) type.
 - `{chain_id}` is the hash of the genesis block of the chain, expressed in a 64 character string representing a hexidemimal number.
 
@@ -221,18 +221,8 @@ The "subject" property does not need to be specified as it is always equal to th
 
 ### 5.3 DID Controller
 
-If the top level EOSIO account permission delegates control to another account, then the DID Document "controller" MUST be the EOSIO DID of that account. e.g. if "example" account has permission "owner" which is delegated to "example2" permission "active" then the DID Document would contain:
-
-```json
-{
-    "id": "did:eosio:telos:example#owner",
-    "controller": "did:eosio:telos:example2#active",
-}
-```
-
-If the top level EOSIO account permission contains multiple authorisation mechanisms including but not exclusively a delegation to another account, then the DID Document "controller" MAY be the EOSIO DID of that account.
-
-If the top level EOSIO account permission delegates control to another account, then the DID Document "controller" MUST be the same as the DID.
+The "controller" property SHOULD NOT be set.
+Information regarding eosio top level permission will be included inside the verification methods.
 
 ## 5.2 Verification Methods
 
@@ -259,29 +249,24 @@ Consumers of the EOSIO DID Method implementation are RECOMMENDED to extend the D
 
 At least one service SHOULD exist on a DID Document of LinkedDomains type. This can be used to resolve the DID and connect to the EOSIO chain through a supported API.
 
-Registered EOSIO chain names should add at least one servic in the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-spec/blob/master/eosio-did-chain-registry.json).
+Registered EOSIO chain names should add at least one service in the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-resolver/blob/master/eosio-did-chain-registry.json).
 
-**QUESTION: should we and how can we specify the EOSIO chain protocol version support of the DID? e.g. is the chain 2.0 or 2.4 or 1.8 compatible...**
+```json
+{
+    "eos:testnet:jungle": {
+        "chainId": "2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840",
+        "service": [
+            {
+                "id": "https://jungle3.cryptolions.io",
+                "type": "LinkedDomains",
+                "serviceEndpoint": "https://jungle3.cryptolions.io"
+            }
+        ]
+    }
+}
+```
 
-### 5.4.1 Service Types
-
-Multiple different APIs exist within the EOSIO ecosystem.
-1. [Nodeos HTTP API](https://developers.eos.io/manuals/eos/latest/nodeos/plugins/chain_api_plugin/api-reference/index) - default provided by Block One, author of EOSIO
-2. [Dfuse](https://dfuse.io) - provides websocket connection and history search features
-3. [Hyperion](https://hyperion.docs.eosrio.io) - provides history search features
-4. [EOSIO Light API](https://github.com/cc32d9/eosio_light_api) - provides history search features
-
-A [service type](https://w3c.github.io/did-spec-registries/#service-types) MUST be provided to describe the type for services related to access and transaction of an EOSIO blockchain.
-
-| API Name | Service type |
-| ------------- |-------------| 
-| Nodeos| EosioNodeos |
-| Dfuse Http Rest API | EosioDfuseRest |
-| Dfuse Websocket API | EosioDfuseWebsocket |
-| Hyperion | EosioHyperion |
-| EOSIO Light API | EosioLightAPI |
-
-See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-spec/blob/master/eosio-did-chain-registry.json) for examples.
+See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-resolver/blob/master/eosio-did-chain-registry.json) for more examples.
 
 ## 5.1 Example DID Document
 
