@@ -98,6 +98,8 @@ Account creation and updates to account permissions (keys and delegates) are par
 
 To achive the design goals, the EOSIO DID method specification implementation SHOULD be generic and provide the default EOSIO method operation CRUD features while also allowing these to be customised by consumers of the implementation (through a constructor or options parameters in function calls). "Implementation" and "consumers" of this implementation will be the terminology used to explain how this design goal is achieved.
 
+In practice, this means that the DID implementations should be imported and the DID create, update and deactivate functions should be overloaded as needed for the EOSIO blockchain. This should be done instead of forking the implementations to create more modular software and reduce upstream dependancy mismatch issues.
+
 More information:
 - [EOSIO Consensus Protocol](https://developers.eos.io/welcome/latest/protocol-guides/consensus_protocol
 )
@@ -573,8 +575,6 @@ DID users of public blockchains should understand that on-chain data is public a
 Private blockchains me support the ability for DID users to control exclusion of their data. This is done on a per-blockchain basis.
 
 # Reference implementations
-
-TODO make public
 
 - eosio-did-resolver (javascript): [https://github.com/Gimly-Blockchain/eosio-did-resolver](https://github.com/Gimly-Blockchain/eosio-did-resolver)
 - eosio-did (javascript): [https://github.com/Gimly-Blockchain/eosio-did](https://github.com/Gimly-Blockchain/eosio-did)
