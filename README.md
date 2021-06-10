@@ -78,7 +78,7 @@ The EOSIO account abstraction is unique within the blockchain industry. There ar
 1. Accounts names are not bound to cryptographic material. Accounts names are chosen by the creator of the account, which may or may not be the entity that controls the account. Accounts names are short strings up to 13 characters making them memorisable.
 2. Each account can have one or more public-private key pairs which can be used to authorise and asserts data about that account. Keys are organised in a hierarchy tree, with human friendly labels for the permission name. Key material can be delegated to another EOSIO account. A weighted multi-signature scheme can be used. See [combination.eosio.json](https://github.com/Gimly-Blockchain/eosio-did-spec/blob/master/examples/combination.eosio.json) for an example of a typical EOSIO account's key structure that includes both delegated and multi-signature requirements in the heirachial tree.
 
-This key material and structure needs to be expressed in the "verificationMethod" property of the EOSIO DID Document. Numerous conversations have and are still taking place to create a DID compatible method spec. The result of this has been to create a new [verification method](https://w3c.github.io/did-core/#verification-methods) type called [Verifiable Conditions](https://github.com/Gimly-Blockchain/verifiable-conditions) which has been drafted and is being reviewed by the W3C Credentials Communiy Group.
+This key material and structure needs to be expressed in the "verificationMethod" property of the EOSIO DID Document. Numerous conversations have and are still taking place to create a DID compatible method spec. The result of this has been to create a new [verification method](https://w3c.github.io/did-core/#verification-methods) type called [Verifiable Conditions](https://github.com/w3c-ccg/verifiable-conditions) which has been drafted and is being reviewed by the W3C Credentials Communiy Group.
 
 More information:
 - [EOSIO Accounts and Permissions](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions)
@@ -235,18 +235,31 @@ Information regarding eosio top level permission will be included inside the ver
 
 ## 5.2 Verification Methods
 
-The verification Methods are populated using information from the EOSIO account's permission structure. This can be obtained by requesting the accounts data from any of the API services.
+The verification Methods are populated using information from the EOSIO account's permission structure. This can be obtained by requesting the accounts data from any of the API services using the nodeos `get_account` API call.
 
-This permission data is presented in the DID document using the ["VerifiableCondition"](https://github.com/Gimly-Blockchain/verifiable-conditions) type. This new verification type is [currently under review](https://github.com/w3c-ccg/community/issues/188) by the W3C credentials community group is expected to become a W3C standard.
+This permission data is presented in the DID document using the draft ["VerifiableCondition"](https://github.com/w3c-ccg/verifiable-conditions) type. This new verification type is a current work item by the W3C credentials community group is expected to become a W3C standard.
 
-All permissions except the root permission should be of type "VerifiableConditionRelationship" with `parentIdUrl` property sets to the parent property DID URL with fragment.
+## 5.2.1 Account permissions
+If the account permission contains a threshold greater than one with one or more keys/delegations with a weight of more than one, then the verification condition MUST use a "conditionWeightedThreshold" property as seen in example [5.1.2 Multi-sig delegated account](#512-multi-sig-delegated-account).
 
-Permissions using a weighted threshold MUST use "VerifiableConditionWeightedThreshold" as seen in example [5.1.2 Multi-sig delegated account](#512-multi-sig-delegated-account) or, if all weights are 1, then  "VerifiableConditionThreshold". If no threshold condition exists, these types CAN still be used, but alternatively CAN be skiped to simplify the DID Document as seen in example [5.1.1 Simple account](#511-simple-account).
+Questions: should we include the following to allow simplification?
+```
+If the account permission contains a threshold greater than one and all weights are 1, then the verification condition MAY use "conditionThreshold" property instead of "conditionWeightedThreshold".
 
-Delegated permissions MUST use "VerifiableConditionDelegated".
+If the account permission contains a threshold of 1 with more than one key/delegation, then the verification condition MAY use "conditionOr" property instead of "conditionThreshold". An example is seen in [5.1.1 Simple account](#511-simple-account).
+
+If the account permission contains a threshold of 1 with only one delegation and no keys, then the verification condition MAY use "conditionDelegated" property instead of "conditionDelegated".
+```
+
+All permissions except the root permission MUST have the "relationshipParent" property sets to the parent property DID URL with fragment.
+
+### 5.2.2 Keys
 
 Public keys are of type
-**TODO key types: k1, r1, wa https://developers.eos.io/manuals/eosjs/latest/API-Reference/enums/_eosjs_numeric_.keytype**
+**TODO key types: see [Issue #5](https://github.com/Gimly-Blockchain/eosio-did-spec/issues/5**
+
+### 5.2.3 Delegations
+To express account permission delegations of an account permission, a verification method of type ["VerifiableCondition"](https://github.com/w3c-ccg/verifiable-conditions) MUST be used with the "conditionDelegated" property set to the DID URL of the other EOSIO account's verification method for the referenced account permission.
 
 ## 5.3 Verification Relationships
 
@@ -290,14 +303,40 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
     "verificationMethod": [{
         "id": "did:eosio:telos:example#owner",
         "controller": "did:eosio:telos:example",
-        "type": "Ed25519VerificationKey",
-        "publicKeyBase58": "7idX86zQ6M3mrzkGQ9MGHf4btSECmcTj4i8Le59ga7CpSpZYy5"
+        "type": "VerifiableCondition",
+        "conditionOr": [
+            {
+                "id": "did:eosio:telos:example#active-1",
+                "controller": "did:eosio:telos:example",
+                "type": "EcdsaSecp256k1VerificationKey2019",
+                "publicKeyJwk": {
+                    "crv": "secp256k1",
+                    "x": "NtngWpJUr-rlNNbs0u-Aa8e16OwSJu6UiFf0Rdo1oJ4",
+                    "y": "qN1jKupJlFsPFc1UkWinqljv4YE0mq_Ickwnjgasvmo",
+                    "kty": "EC",
+                    "kid": "WjKgJV7VRw3hmgU6--4v15c0Aewbcvat1BsRFTIqa5Q"
+                }
+            }
+        ],
     }, {
         "id": "did:eosio:telos:example#active",
         "controller": "did:eosio:telos:example",
-        "type": ["VerifiableCondition", "VerifiableConditionRelationship", "Ed25519VerificationKey"],
-        "parentIdUrl": "did:eosio:telos:example#owner",
-        "publicKeyBase58": "7NFuBesBKK5XHHLtzFxm7S57Eq11gUtndrsvq3Mt3XZNMTHfqc"
+        "type": "VerifiableCondition",
+        "conditionOr": [
+            {
+                "id": "did:eosio:telos:example#active-1",
+                "controller": "did:eosio:telos:example",
+                "type": "EcdsaSecp256k1VerificationKey2019",
+                "publicKeyJwk": {
+                    "crv": "secp256k1",
+                    "x": "IF/eIukZZ8lixpp57o7vgAm8qN1Z3Nf+6AM67o2o6FS",
+                    "y": "VJfQeWtL5LIs5JAri44RvQ77nq5tRg50lvQHZT7smal",
+                    "kty": "EC",
+                    "kid": "FxmaStkDj9P9sBpYgCDt4wXQWjFI2ArNx6C73uRRSW2"
+                }
+            }
+        ],
+        "relationshipParent": "did:eosio:telos:example#owner",
     }]
 }
 ```
@@ -311,47 +350,65 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
     "verificationMethod": [{
         "id": "did:eosio:telos:example#owner",
         "controller": "did:eosio:telos:example",
-        "type": ["VerifiableCondition", "VerifiableConditionWeightedThreshold"],
+        "type": "VerifiableCondition",
         "threshold": 3,
-        "verificationMethod": [{
+        "conditionWeightedThreshold": [{
                 "weight": 1,
-                "verificationMethod": {
+                "condition": {
                     "id": "did:eosio:telos:example#owner-0",
                     "controller": "did:eosio:telos:example",
-                    "type": "Ed25519VerificationKey",
-                    "publicKeyBase58": "7idX86zQ6M3mrzkGQ9MGHf4btSECmcTj4i8Le59ga7CpSpZYy5"
+                    "type": "EcdsaSecp256k1VerificationKey2019",
+                    "publicKeyJwk": {
+                        "crv": "secp256k1",
+                        "x": "NtngWpJUr-rlNNbs0u-Aa8e16OwSJu6UiFf0Rdo1oJ4",
+                        "y": "qN1jKupJlFsPFc1UkWinqljv4YE0mq_Ickwnjgasvmo",
+                        "kty": "EC",
+                        "kid": "WjKgJV7VRw3hmgU6--4v15c0Aewbcvat1BsRFTIqa5Q"
+                    }
                 }
             }, {
                 "weight": 2,
-                "verificationMethod": {
+                "condition": {
                     "id": "did:eosio:telos:example#owner-1",
                     "controller": "did:eosio:telos:example",
-                    "type": "Ed25519VerificationKey",
-                    "publicKeyBase58": "7G5AXPP4RNG5DiZACneMZVenYEQ2GmVwcYUis8YrFHorQic5h8"
+                    "type": "EcdsaSecp256k1VerificationKey2019",
+                    "publicKeyJwk": {
+                        "crv": "secp256k1",
+                        "x": "IF/eIukZZ8lixpp57o7vgAm8qN1Z3Nf+6AM67o2o6FS",
+                        "y": "VJfQeWtL5LIs5JAri44RvQ77nq5tRg50lvQHZT7smal",
+                        "kty": "EC",
+                        "kid": "FxmaStkDj9P9sBpYgCDt4wXQWjFI2ArNx6C73uRRSW2"
+                    }
                 }
             }, {
                 "weight": 2,
-                "verificationMethod": {
+                "condition": {
                     "id": "did:eosio:telos:example#owner-2",
                     "controller": "did:eosio:telos:example",
-                    "type": ["VerifiableCondition", "VerifiableConditionDelegated"],
-                    "delegatedIdUrl": "did:eosio:telos:example2#active"
+                    "type": "VerifiableCondition",
+                    "conditionDelegated": "did:eosio:telos:example2#active"
                 }
             } 
         ]
     }, {
         "id": "did:eosio:telos:example#active",
         "controller": "did:eosio:telos:example",
-        "type": ["VerifiableCondition", "VerifiableConditionRelationship", "VerificationConditionWeightedThreshold"],
-        "parentIdUrl": "did:eosio:telos:example#owner",
+        "type": "VerifiableCondition",
+        "relationshipParent": "did:eosio:telos:example#owner",
         "threshold": 1,
-        "verificationMethod": [{
+        "conditionWeightedThreshold": [{
                 "weight": 1,
-                "verificationMethod": {
+                "condition": {
                     "id": "did:eosio:telos:example#active-0",
                     "controller": "did:eosio:telos:example",
-                    "type": "Ed25519VerificationKey",
-                    "publicKeyBase58": "7NFuBesBKK5XHHLtzFxm7S57Eq11gUtndrsvq3Mt3XZNMTHfqc"
+                    "type": "EcdsaSecp256k1VerificationKey2019",
+                    "publicKeyJwk": {
+                        "crv": "secp256k1",
+                        "x": "ymK3uZFQRP55ZII5eUc4hAxFgLTBy3eWgbllMoBm4nD",
+                        "y": "xFgLTBy3eWgbllMoBm4nD9Jqo249Mj_mjjJt6fFUCGI",
+                        "kty": "EC",
+                        "kid": "H_-UD2D3vEX4MOJSNsj5AWhMt2IebbWYILSqbi4_a2c"
+                    }
                 }
             }
         ]
