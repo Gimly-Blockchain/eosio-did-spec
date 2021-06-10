@@ -305,7 +305,7 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
     "verificationMethod": [{
         "id": "did:eosio:telos:example#owner",
         "controller": "did:eosio:telos:example",
-        "type": "VerifiableCondition",
+        "type": "VerifiableCondition2021",
         "conditionOr": [
             {
                 "id": "did:eosio:telos:example#active-1",
@@ -323,7 +323,7 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
     }, {
         "id": "did:eosio:telos:example#active",
         "controller": "did:eosio:telos:example",
-        "type": "VerifiableCondition",
+        "type": "VerifiableCondition2021",
         "conditionOr": [
             {
                 "id": "did:eosio:telos:example#active-1",
@@ -352,7 +352,7 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
     "verificationMethod": [{
         "id": "did:eosio:telos:example#owner",
         "controller": "did:eosio:telos:example",
-        "type": "VerifiableCondition",
+        "type": "VerifiableCondition2021",
         "threshold": 3,
         "conditionWeightedThreshold": [{
                 "weight": 1,
@@ -387,7 +387,7 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
                 "condition": {
                     "id": "did:eosio:telos:example#owner-2",
                     "controller": "did:eosio:telos:example",
-                    "type": "VerifiableCondition",
+                    "type": "VerifiableCondition2021",
                     "conditionDelegated": "did:eosio:telos:example2#active"
                 }
             } 
@@ -395,7 +395,7 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
     }, {
         "id": "did:eosio:telos:example#active",
         "controller": "did:eosio:telos:example",
-        "type": "VerifiableCondition",
+        "type": "VerifiableCondition2021",
         "relationshipParent": "did:eosio:telos:example#owner",
         "threshold": 1,
         "conditionWeightedThreshold": [{
