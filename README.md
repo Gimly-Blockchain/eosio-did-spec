@@ -254,8 +254,35 @@ All permissions except the root permission MUST have the "relationshipParent" pr
 
 ### 5.2.2 Keys
 
-Public keys are of type
-**TODO key types: see [Issue #5](https://github.com/Gimly-Blockchain/eosio-did-spec/issues/5**
+EOSIO uses several key types for authorization. The public key is stored on chain. When an account's information is requested, the keys are part of the permissions array. In EOSIO client SDKs, the keys can be read as a sigle string with a prefix whith their type. The SDK and other libraries can be used to extract the relevant material needed to map the key into a verification method object. The table below shows the string prefixes and the corresponding verification method type to use:
+
+| prefix | type|
+| --- | --- |
+| EOS_ (legacy) | EcdsaSecp256k1VerificationKey2019 |
+| PUB_K1_ | EcdsaSecp256k1VerificationKey2019 |
+| PUB_R1_ | Not officially supported |
+| PUB_WA_ | Not officially supported |
+
+K1 key types MUST use the official [EcdsaSecp256k1VerificationKey2019](https://w3c-ccg.github.io/lds-ecdsa-secp256k1-2019) material type. An example is seen in [5.1.1 Simple account](#511-simple-account).
+
+The R1 and WA key types both use the [Secp256r1](https://neuromancer.sk/std/secg/secp256r1) (sometimes referred to as P-256) elliptic curve. It is similar to the Secp256k1 curve as explained [here](https://www.johndcook.com/blog/2018/08/21/a-tale-of-two-elliptic-curves). There are no current official verification method types that correspond to this curve in the [DID Specification Registries](https://w3c.github.io/did-spec-registries) and as such this key is not officially supported in the EOSIO DID. This key type is not in popular use on any known EOSIO chains so this decision does not have a large impact.
+
+If your EOSIO chain does use the R1 or WA key types please create an issue and bring up this topic. See [Issue 13](https://github.com/Gimly-Blockchain/eosio-did-spec/issues/13) for instructions for how to get this curve officially supported. In the meantime it is RECOMMENDED that EOSIO DID implementations provide some support for these keys by specifying an unsupported type "EcdsaSecp256r1VerificationKey2019" (note the different "r") with the following structure:
+```js
+{
+    "id": "did:eosio:telos:example#active-1",
+    "controller": "did:eosio:telos:example",
+    "type": "EcdsaSecp256r1VerificationKey2019",
+    "publicKeyJwk": {
+        "crv": "secp256r1",
+        "x": "NtngWpJUr-rlNNbs0u-Aa8e16OwSJu6UiFf0Rdo1oJ4",
+        "y": "qN1jKupJlFsPFc1UkWinqljv4YE0mq_Ickwnjgasvmo",
+        "kty": "EC"
+    }
+}
+```
+
+For more background on EOSIO key types for the DID Document see [Issue #5](https://github.com/Gimly-Blockchain/eosio-did-spec/issues/5)
 
 ### 5.2.3 Delegations
 If an account permission delegates to another account, a verification method of type ["VerifiableCondition"](https://github.com/w3c-ccg/verifiable-conditions) MUST be used with the "conditionDelegated" property set to the DID URL of the other EOSIO account's verification method corresponding to the delegated permission.
@@ -314,8 +341,7 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
                     "crv": "secp256k1",
                     "x": "NtngWpJUr-rlNNbs0u-Aa8e16OwSJu6UiFf0Rdo1oJ4",
                     "y": "qN1jKupJlFsPFc1UkWinqljv4YE0mq_Ickwnjgasvmo",
-                    "kty": "EC",
-                    "kid": "WjKgJV7VRw3hmgU6--4v15c0Aewbcvat1BsRFTIqa5Q"
+                    "kty": "EC"
                 }
             }
         ],
@@ -332,8 +358,7 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
                     "crv": "secp256k1",
                     "x": "IF/eIukZZ8lixpp57o7vgAm8qN1Z3Nf+6AM67o2o6FS",
                     "y": "VJfQeWtL5LIs5JAri44RvQ77nq5tRg50lvQHZT7smal",
-                    "kty": "EC",
-                    "kid": "FxmaStkDj9P9sBpYgCDt4wXQWjFI2ArNx6C73uRRSW2"
+                    "kty": "EC"
                 }
             }
         ],
@@ -363,8 +388,7 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
                         "crv": "secp256k1",
                         "x": "NtngWpJUr-rlNNbs0u-Aa8e16OwSJu6UiFf0Rdo1oJ4",
                         "y": "qN1jKupJlFsPFc1UkWinqljv4YE0mq_Ickwnjgasvmo",
-                        "kty": "EC",
-                        "kid": "WjKgJV7VRw3hmgU6--4v15c0Aewbcvat1BsRFTIqa5Q"
+                        "kty": "EC"
                     }
                 }
             }, {
@@ -377,8 +401,7 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
                         "crv": "secp256k1",
                         "x": "IF/eIukZZ8lixpp57o7vgAm8qN1Z3Nf+6AM67o2o6FS",
                         "y": "VJfQeWtL5LIs5JAri44RvQ77nq5tRg50lvQHZT7smal",
-                        "kty": "EC",
-                        "kid": "FxmaStkDj9P9sBpYgCDt4wXQWjFI2ArNx6C73uRRSW2"
+                        "kty": "EC"
                     }
                 }
             }, {
@@ -407,8 +430,7 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
                         "crv": "secp256k1",
                         "x": "ymK3uZFQRP55ZII5eUc4hAxFgLTBy3eWgbllMoBm4nD",
                         "y": "xFgLTBy3eWgbllMoBm4nD9Jqo249Mj_mjjJt6fFUCGI",
-                        "kty": "EC",
-                        "kid": "H_-UD2D3vEX4MOJSNsj5AWhMt2IebbWYILSqbi4_a2c"
+                        "kty": "EC"
                     }
                 }
             }
