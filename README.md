@@ -258,7 +258,9 @@ Public keys are of type
 **TODO key types: see [Issue #5](https://github.com/Gimly-Blockchain/eosio-did-spec/issues/5**
 
 ### 5.2.3 Delegations
-To express account permission delegations of an account permission, a verification method of type ["VerifiableCondition"](https://github.com/w3c-ccg/verifiable-conditions) MUST be used with the "conditionDelegated" property set to the DID URL of the other EOSIO account's verification method for the referenced account permission.
+If an account permission delegates to another account, a verification method of type ["VerifiableCondition"](https://github.com/w3c-ccg/verifiable-conditions) MUST be used with the "conditionDelegated" property set to the DID URL of the other EOSIO account's verification method corresponding to the delegated permission.
+
+An example is seen in [5.1.1 Simple account](#511-simple-account).
 
 ## 5.3 Verification Relationships
 
