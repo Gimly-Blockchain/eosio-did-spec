@@ -244,14 +244,11 @@ This permission data is presented in the DID document using the draft ["Verifiab
 ## 5.2.1 Account permissions
 If the account permission contains a threshold greater than one with one or more keys/delegations with a weight of more than one, then the verification condition MUST use a "conditionWeightedThreshold" property as seen in example [5.1.2 Multi-sig delegated account](#512-multi-sig-delegated-account).
 
-Questions: should we include the following to allow simplification?
-```
 If the account permission contains a threshold greater than one and all weights are 1, then the verification condition MAY use "conditionThreshold" property instead of "conditionWeightedThreshold".
 
 If the account permission contains a threshold of 1 with more than one key/delegation, then the verification condition MAY use "conditionOr" property instead of "conditionThreshold". An example is seen in [5.1.1 Simple account](#511-simple-account).
 
 If the account permission contains a threshold of 1 with only one delegation and no keys, then the verification condition MAY use "conditionDelegated" property instead of "conditionDelegated".
-```
 
 All permissions except the root permission MUST have the "relationshipParent" property sets to the parent property DID URL with fragment.
 
