@@ -6,7 +6,7 @@ This document is not a W3C Standard nor is it on the W3C Standards Track. This i
 
 The EOSIO Identity Working Group is an open working group where we, the EOSIO community, discuss identity on EOSIO chains and progress work such as this DID specification and it's implementation. We have a weekly meeting and a Slack channel.
 
-**[Join the EOSIO Identity Working Group](https://www.gimly.io/eosio-id-wg)**
+**[Join the EOSIO Identity Working Group](https://www.gimly.io/eosio-identity)**
 
 Comments regarding this document are welcome. Please file issues and PRs directly on Github. Contributors are recognized through adding commits to the code base.
 
@@ -14,7 +14,7 @@ Contributors:
 - Jack Tanner <jack@gimly.io>
 - Jonas Walter
 - Julius Rahaus
-- Sana Rauf
+- Sana Rauf | Block One
 
 <!-- Make sure images have 75 pixel height -->
 [![Gimly](./assets/gimly.jpg)](https://gimly.io)
