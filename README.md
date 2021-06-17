@@ -23,6 +23,17 @@ Contributors:
 ![](./assets/filler.png)
 [![Block One](./assets/blockone.png)](https://block.one)
 
+# Contents
+
+1. [Introduction](#1-introduction)
+2. [Design Goals](#2-design-goals)
+3. [DID Method Schema: did:eosio](#3-did-method-schema-dideosio)
+4. [DID Document](#4-did-document)
+5. [Method Operations](#5-method-operations)
+6. [Security Considerations](#6-security-considerations)
+7. [Privacy Considerations](#7-privacy-considerations)
+8. [Reference Implementations](#8-reference-implementations)
+
 # 1. Introduction
 
 ## 1.1 Self Sovereign Identity (SSI)
@@ -220,28 +231,28 @@ e.g. `did:eosio:4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11
 <br>
 (both equivalent)
 
-# 5. DID Document
+# 4. DID Document
 
-## 5.1 Identifiers
+## 4.1 Identifiers
 
 As described in the [3. DID Method Schema: did:eosio](#3-DID-Method-Schema-dideosio).
 
-### 5.2 DID Subject
+### 4.2 DID Subject
 
 The "subject" property does not need to be specified as it is always equal to the DID.
 
-### 5.3 DID Controller
+### 4.3 DID Controller
 
 The "controller" property SHOULD NOT be set.
 Information regarding eosio top level permission will be included inside the verification methods.
 
-## 5.2 Verification Methods
+## 4.4 Verification Methods
 
 The verification Methods are populated using information from the EOSIO account's permission structure. This can be obtained by requesting the accounts data from any of the API services using the nodeos `get_account` API call.
 
 This permission data is presented in the DID document using the draft ["VerifiableCondition"](https://github.com/w3c-ccg/verifiable-conditions) type. This new verification type is a current work item by the W3C credentials community group is expected to become a W3C standard.
 
-## 5.2.1 Account permissions
+### 4.4.1 Account permissions
 If the account permission contains a threshold greater than one with one or more keys/delegations with a weight of more than one, then the verification condition MUST use a "conditionWeightedThreshold" property as seen in example [5.1.2 Multi-sig delegated account](#512-multi-sig-delegated-account).
 
 If the account permission contains a threshold greater than one and all weights are 1, then the verification condition MAY use "conditionThreshold" property instead of "conditionWeightedThreshold".
@@ -252,7 +263,7 @@ If the account permission contains a threshold of 1 with only one delegation and
 
 All permissions except the root permission MUST have the "relationshipParent" property sets to the parent property DID URL with fragment.
 
-### 5.2.2 Keys
+### 4.4.2 Keys
 
 EOSIO uses several key types for authorization. The public key is stored on chain. When an account's information is requested, the keys are part of the permissions array. In EOSIO client SDKs, the keys can be read as a sigle string with a prefix whith their type. The SDK and other libraries can be used to extract the relevant material needed to map the key into a verification method object. The table below shows the string prefixes and the corresponding verification method type to use:
 
@@ -284,18 +295,18 @@ If your EOSIO chain does use the R1 or WA key types please create an issue and b
 
 For more background on EOSIO key types for the DID Document see [Issue #5](https://github.com/Gimly-Blockchain/eosio-did-spec/issues/5)
 
-### 5.2.3 Delegations
+### 4.4.3 Delegations
 If an account permission delegates to another account, a verification method of type ["VerifiableCondition"](https://github.com/w3c-ccg/verifiable-conditions) MUST be used with the "conditionDelegated" property set to the DID URL of the other EOSIO account's verification method corresponding to the delegated permission.
 
 An example is seen in [5.1.1 Simple account](#511-simple-account).
 
-## 5.3 Verification Relationships
+## 4.5 Verification Relationships
 
 The way in which EOSIO account permissions are used is not specified in the protocol and cannot be extracted from the EOSIO blockchain. It is expected that applications that consume an EOSIO DID Method implementation will know more information about how the verification methods are used. This also applies to specific blockchains that consume the implementations.
 
 Consumers of the EOSIO DID Method implementation are RECOMMENDED to extend the DID Document's verification relationships with lists of fragments that point to verification methods adequate for relationships.
 
-## 5.4 Services
+## 4.6 Services
 
 At least one service SHOULD exist on a DID Document of LinkedDomains type. This can be used to resolve the DID and connect to the EOSIO chain through a supported API.
 
@@ -318,11 +329,9 @@ Registered EOSIO chain names should add at least one service in the [EOSIO DID c
 
 See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-resolver/blob/master/eosio-did-chain-registry.json) for more examples.
 
-## 5.1 Example DID Document
+## 4.7 Example DID Document
 
-**TODO key type Ed25519VerificationKey and publicKeyBase58 need to be checked.**
-
-### 5.1.1 Simple account
+### 4.7.1 Simple account
 ```json
 {
     "@context": ["https://www.w3.org/ns/did/v1", 
@@ -367,7 +376,7 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
 }
 ```
 
-### 5.1.2 Multi-sig delegated account
+### 4.7.2 Multi-sig delegated account
 ```json
 {
     "@context": ["https://www.w3.org/ns/did/v1",
@@ -439,9 +448,9 @@ See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockcha
 }
 ```
 
-# 4. Method Operations
+# 5. Method Operations
 
-## 4.1 Create
+## 5.1 Create
 
 EOSIO accounts are created with an on-chain transaction. The default is to call the ["newaccount" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.bios/include/eosio.bios/eosio.bios.hpp#L190) on the system contract from an existing account on the blockchain. This action can be changed on each EOSIO chain, and upgraded over time. For some EOSIO systems, the on-chain account creation process is not openly accessible, and uses will use a different mechanism (such as an email and password request to an organisation) to create an account.
 
@@ -449,13 +458,13 @@ Implementations of the EOSIO DID Method SHOULD implement the create operation ac
 
 Consumers of a EOSIO DID Method implementation SHOULD override the default create behaviour if a different mechanism exists to create an EOSIO DID.
 
-## 4.2 Read
+## 5.2 Read
 
 Resolution of a DID Document can be done by a service API. This may be an authorised or rate limited API. There are different types of EOSIO APIs as outlined in [Service Types](#541-Service-Types).
 
 **Placeholder: Description of method of creating an authorized (permissioned) read request with private EOSIO blockchains in mind.**
 
-## 4.3 Update
+## 5.3 Update
 
 EOSIO account's permissions are updated with an on-chain transaction. The default is to call the ["updateauth" action](https://github.com/EOSIO/eosio.contracts/blob/52fbd4ac7e6c38c558302c48d00469a4bed35f7c/contracts/eosio.bios/include/eosio.bios/eosio.bios.hpp#L205) on the system contract from your account. This action can be changed on each EOSIO chain, and upgraded over time.
 
@@ -463,7 +472,7 @@ Implementations of the EOSIO DID Method SHOULD implement the update operation ac
 
 Consumers of a EOSIO DID Method implementation SHOULD override the default update behaviour if a different mechanism exists to update an EOSIO DID.
 
-## 4.4 Deactivate
+## 5.4 Deactivate
 
 EOSIO blockchains do not have a default mechanism to deactivate accounts.
 
@@ -473,21 +482,21 @@ Consumers of a EOSIO DID Method implementation SHOULD override the default updat
 
 [Europechain](https://europechain.io) is an example EOSIO blockchain with a deactivate feature.
 
-# 5. Security considerations
+# 6. Security considerations
 
 
-## Eavesdropping
+## 6.1 Eavesdropping
 For public EOSIO blockchains, all transactions, history and stateful information is public.
 
 For private and hybrid EOSIO blockchains, access to the data via API or P2P protocol are limited and permission based depending on the blockchain. Private EOSIO blockchains SHOULD use encrypted data transport between clients and nodes. 
 
-## Replay
+## 6.2 Replay
 
 All EOSIO DID method default operations are done through an on-chain transaction are protected by including the blockchain's chain id and a recent block header hash in the transaction (called [Transaction as Proof of Stake](https://eosio.stackexchange.com/questions/2362/what-is-transaction-as-proof-of-stake-tapos-and-when-would-a-smart-contract)).
 
 EOSIO DID consumer MAY override the method operations with off-chain mechanisms which may be susceptible to replay attacks. This only applies to permissioned EOSIO blockchains.
 
-## Message Insertion
+## 6.3 Message Insertion
 
 All EOSIO DID method default operations are done through an on-chain transaction and signed by the accounts authorized private key. There is no way for a party without these keys to act on behalf of the DID.
 
@@ -495,13 +504,13 @@ Note that EOSIO accounts may delegate authorisation control to other EOSIO accou
 
 EOSIO DID consumer MAY override the method operations with off-chain mechanisms which may be susceptible to message insertion attacks. This only applies to permissioned EOSIO blockchains.
 
-## Deletion
+## 6.4 Deletion
 
 Deletion is not a feature of the EOSIO P2P protocol.
 
 Functionality to allow users to delete their account can be superimposed over the chain at the API level (such as what is done by Europechain). In such a case, the deletion mechanism will be controlled by such an implementation (for Europechain, deletion is an on-chain transaction signed by the EOSIO account's authorized keys)
 
-## Modification
+## 6.5 Modification
 
 All EOSIO DID's updated through an on-chainon-chain transaction signed by the accounts authorized private key. There is no way for a party without these keys to act on behalf of the DID.
 
@@ -509,22 +518,22 @@ Note that EOSIO accounts may delegate authorisation control to other EOSIO accou
 
 EOSIO DID consumer MAY override the method operations with off-chain mechanisms which may be susceptible to modification attacks. This only applies to permissioned EOSIO blockchains.
 
-## Man-in-the-Middle
+## 6.6 Man-in-the-Middle
 
 All EOSIO DID method default operations are done through an on-chain transaction signed by the accounts authorized private key. An attacker that gains access to a signed transaction message before it is submitted, cannot duplicate this on the same or other chains due to unique in the transaction that is checked for uniqueness by the EOSIO protocol. Each transaction has an expiration time, usually set to 30 seconds, and the attacker may choose to delay the submission of this transaction up until the expiration time.
 
-## Denial of Service
+## 6.7 Denial of Service
 
 The ability to limit the service of an EOSIO blockchain depends on its infrastructure, governance structure and server API figuration. DID controllers and subjects should be aware of these fundamentals to assess the security of the system.
 
-### Infrastucture
+### 6.7.1 Infrastucture
 Infrastructure can be centralised or decentralised.
 
 Blockchains can be configured to have multiple independent organisations that run EOSIO peer nodes. More independence block producers running infrastructure increases infrastucture availability reducing service outages and reduces governance attacks (discussed next).
 
 Each node can also be configured to have redundancy capacity through the blockvault_client_plugin. This can be used for centralised blockchains, or for individual block producers in a centralised blockchain.
 
-### Governance of the blockchain service
+### 6.7.2 Governance of the blockchain service
 The EOSIO protocol and DID method is governance agnostic. EOSIO blockchains can be Proof of Authority (default), Proof of Stake, Delegated Proof of Stake and more ([source](https://github.com/theblockstalk/eosio-contracts/tree/master/governance)) modifying the system contract.
 
 An EOSIO blockchain can be attacked by vulnerabilities in the governance model. Examples:
@@ -534,7 +543,7 @@ An EOSIO blockchain can be attacked by vulnerabilities in the governance model. 
 
 If enough of the EOSIO blockchain governance is compromised, the blockchain service as a whole may be compromised. DID subjects and controllers should feel comfortable with the governance model of the EOSIO blockchain they are using. EOSIO blockchains may use internal or external regulation to enforce protection of their governance system.
 
-### Governance of the blockchain's privledged features
+### 6.7.3 Governance of the blockchain's privledged features
 
 Privledged EOSIO account are able to submit transactions to the EOSIO blockchain that bypass signature validation checks ([source](https://developers.eos.io/manuals/eosio.contracts/v1.9/key-concepts/system)). The intention of this feature is to be used to administrate the blockchain in consensys with all of the operators of the EOSIO chain. Such an administration task may be recovered a users account in the event they lose their private key.
 
@@ -542,60 +551,60 @@ Each EOSIO chain implements what accounts are a privileged and what privileged a
 
 By bypassing signature validation checks, privileged accounts can submit transactions on behalf of any other account on the same EOSIO blockchain. This includes updating the DID Document. It is for this reason that the governance of the EOSIO chain must be trusted.
 
-### API
+### 6.7.4 API
 If an API service fails completely, a DID will need to find another service to connect to the EOSIO blockchain.
 
-## Residual Risks
+## 6.8 Residual Risks
 The system's overall security and integrity can only as good as the DID controller's ability to manage private keys. This is made easier with the ability for wallets to create heirachies of keys and complex structures. This is still a difficult problem for organizations and people.
 
-# 6. Privacy considerations
-## Surveillance
+# 7. Privacy considerations
+## 7.1 Surveillance
 
 In a public EOSIO network, all communication is visible by watching the blockchain. In a private network both the peer-to-peer and the node to client communication should be encrypted to ensure data surveillance protection.
 
-## Stored data compromise
+## 7.2 Stored data compromise
 
 The DID Document data and history is stored on in the blockchain state and can be done through access to a synchronising EOSIO blockchain node in the network. In a public network, this can be done through public node APIs or by running a node that synchronises with the public network. A privates network has restrictions on the peer-to-peer synchronisation and APIs.
 
-## Unsolicited traffic
+## 7.3 Unsolicited traffic
 
 Create, update and (if supported) deactivate DID operations require transactions signed by the private keys only owned by the DID controller and cannot be forged. Public API nodes do not identify read operations to DIDs, and may receive unsolicited traffic from unintended parties. Public and private APIs do enforce IP or registered API account based rate-limiting to ensure service is not affected by this.
 
-## Misattribution
+## 7.4 Misattribution
 
 Create, update and (if supported) deactivate DID operations require transactions signed by the private keys only owned by the DID controller and cannot be forged.
 
-## Correlation
+## 7.5 Correlation
 
 The DID Document data and history is stored on in the blockchain state and can be done through access to a synchronising EOSIO blockchain node in the network. State and historic data from interaction of the DID with smart contracts on the blockchain is also accessible through a blockchain node which can be directly correlated with the DID. It is therefore important for DID users to carefully consider what applications they use that had on-chain data to the blockchains.
 
 Private blockchains will ensure that this correlation cannot be done publicly, but can still be done between permissioned and peer-to-peer nodes.
 
-## Identification
+## 7.6 Identification
 
 If personal information is added to the blockchain, potentially a viable credential, this can be permanently accessed through through access to a synchronising EOSIO blockchain node in the network. With enough identifying information, and identity can be deduced.
 
 For this reason, it is very strongly suggested that personal information is not added to the blockchain, even in private networks.
 
-## Secondary use
+## 7.7 Secondary use
 
 EOSIO blockchain software does not make secondary use of transaction data other than for the purpose of synchronising the blockchain and maintaining the state.
 
 DID users should carefully consider blockchain applications, which many store additional information about the DID, the identity of the DID and other data in off-chain data storage systems. Application providers should clearly state data storage policy and purposes and users should consider this when deciding to use such applications.
 
-## Disclosure
+## 7.8 Disclosure
 
 DID users of public blockchains should understand that on-chain data is public and does not have limitations on its use or disclosure.
 
 Private blockchains may enforce data privacy restrictions which should be stated and considered by the DID user.
 
-## Exclusion
+## 7.9 Exclusion
 
 DID users of public blockchains should understand that on-chain data is public and does not have limitations on its use or disclosure.
 
 Private blockchains me support the ability for DID users to control exclusion of their data. This is done on a per-blockchain basis.
 
-# Reference implementations
+# 8. Reference implementations
 
 - eosio-did-resolver (javascript): [https://github.com/Gimly-Blockchain/eosio-did-resolver](https://github.com/Gimly-Blockchain/eosio-did-resolver)
 - eosio-did (javascript): [https://github.com/Gimly-Blockchain/eosio-did](https://github.com/Gimly-Blockchain/eosio-did)
