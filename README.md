@@ -15,6 +15,7 @@ Contributors:
 - Jonas Walter
 - Julius Rahaus
 - Sana Rauf | Block One
+- Andres Gomez Ramirez | EOS Costa Rica
 
 <!-- Make sure images have 75 pixel height -->
 [![Gimly](./assets/gimly.jpg)](https://gimly.io)
