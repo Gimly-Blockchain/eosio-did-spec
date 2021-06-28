@@ -23,6 +23,8 @@ Contributors:
 [![Europechain](./assets/europechain.png)](https://europechain.io)
 ![](./assets/filler.png)
 [![Block One](./assets/blockone.png)](https://block.one)
+![](./assets/filler.png)
+[![EOS Costa Rica](./assets/eoscr.png)](https://eosio.cr)
 
 # Contents
 
