@@ -144,7 +144,7 @@ did:eosio:{chain_id/registered_chain_name}:{account-name}
 Due to the strict requirements registered chain names have to adhere to, a clash with the chain id schema is impossible.
 
 These are the properties that make up an EOSIO DID:
-- `{registered_eosio_name}` is a pre-registered name of the EOSIO chain consisting of one or more colon separated name blocks, each complying to the [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) (one to thirdteen lowercase English characters a-z, period . or digits 1-5). This should be registered in the below table and additionally in the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-resolver/blob/master/eosio-did-chain-registry.json), including at least one service.
+- `{registered_eosio_name}` is a pre-registered name of the EOSIO chain consisting of one or more colon separated name blocks, each complying to the [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) (one to thirdteen lowercase English characters a-z, period . or digits 1-5). This should be registered in the below table and additionally in the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-resolver/blob/master/src/eosio-did-chain-registry.json), including at least one service.
 - `{account_name}` is the name of the account on the chain, also of [EOSIO account name type](https://developers.eos.io/welcome/latest/protocol-guides/accounts_and_permissions/#21-account-schema) type.
 - `{chain_id}` is the hash of the genesis block of the chain, expressed in a 64 character string representing a hexidemimal number.
 
@@ -321,7 +321,7 @@ Consumers of the EOSIO DID Method implementation are RECOMMENDED to extend the D
 
 At least one service SHOULD exist on a DID Document of LinkedDomains type. This can be used to resolve the DID and connect to the EOSIO chain through a supported API.
 
-Registered EOSIO chain names should add at least one service in the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-resolver/blob/master/eosio-did-chain-registry.json).
+Registered EOSIO chain names should add at least one service in the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-resolver/blob/master/src/eosio-did-chain-registry.json).
 
 ```json
 {
@@ -338,7 +338,7 @@ Registered EOSIO chain names should add at least one service in the [EOSIO DID c
 }
 ```
 
-See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-resolver/blob/master/eosio-did-chain-registry.json) for more examples.
+See the [EOSIO DID chain method json registry](https://github.com/Gimly-Blockchain/eosio-did-resolver/blob/master/src/eosio-did-chain-registry.json) for more examples.
 
 ## 4.7 Example DID Document
 
@@ -621,4 +621,4 @@ Private blockchains me support the ability for DID users to control exclusion of
 | --- | --- | --- | --- |
 | DID Resolver | Javascript | [npm package](https://www.npmjs.com/package/eosio-did-resolver) | [https://github.com/Gimly-Blockchain/eosio-did-resolver](https://github.com/Gimly-Blockchain/eosio-did-resolver) |
 | DID Operations (CRUD) | Javascript |  [npm package](https://www.npmjs.com/package/eosio-did) | [https://github.com/Gimly-Blockchain/eosio-did](https://github.com/Gimly-Blockchain/eosio-did) |
-| Universal Resolver Driver | Docker | Docker Hub | [https://github.com/Gimly-Blockchain/eosio-did-driver](https://github.com/Gimly-Blockchain/eosio-did-driver) |
+| Universal Resolver Driver | Docker | Docker Hub | [https://github.com/Gimly-Blockchain/eosio-did-universal-resolver-driver](https://github.com/Gimly-Blockchain/eosio-did-universal-resolver-driver) |
