@@ -267,27 +267,38 @@ All permissions except the root permission MUST have the "relationshipParent" pr
 
 EOSIO uses several key types for authorization. The public key is stored on chain. When an account's information is requested, the keys are part of the permissions array. In EOSIO client SDKs, the keys can be read as a sigle string with a prefix whith their type. The SDK and other libraries can be used to extract the relevant material needed to map the key into a verification method object. The table below shows the string prefixes and the corresponding verification method type to use:
 
-| prefix | type|
-| --- | --- |
-| EOS_ (legacy) | EcdsaSecp256k1VerificationKey2019 |
-| PUB_K1_ | EcdsaSecp256k1VerificationKey2019 |
-| PUB_R1_ | Not officially supported |
-| PUB_WA_ | Not officially supported |
+| EOSIO key prefix | Verification Method type| Key format |
+| --- | --- | --- |
+| EOS_ (legacy) | EcdsaSecp256k1VerificationKey2019 | publicKeyJwk with "crv" = "secp256k1" |
+| PUB_K1_ | EcdsaSecp256k1VerificationKey2019 | publicKeyJwk with "crv" = "secp256k1" |
+| PUB_R1_ | JsonWebKey2020 | publicKeyJwk with "crv" = "P-256" |
+| PUB_WA_ | JsonWebKey2020 | publicKeyJwk with "crv" = "P-256" |
 
-K1 key types MUST use the official [EcdsaSecp256k1VerificationKey2019](https://w3c-ccg.github.io/lds-ecdsa-secp256k1-2019) material type. An example is seen in [5.1.1 Simple account](#511-simple-account).
-
-The R1 and WA key types both use the [Secp256r1](https://neuromancer.sk/std/secg/secp256r1) (sometimes referred to as P-256) elliptic curve. It is similar to the Secp256k1 curve as explained [here](https://www.johndcook.com/blog/2018/08/21/a-tale-of-two-elliptic-curves). There are no current official verification method types that correspond to this curve in the [DID Specification Registries](https://w3c.github.io/did-spec-registries) and as such this key is not officially supported in the EOSIO DID. This key type is not in popular use on any known EOSIO chains so this decision does not have a large impact.
-
-If your EOSIO chain does use the R1 or WA key types please create an issue and bring up this topic. See [Issue 13](https://github.com/Gimly-Blockchain/eosio-did-spec/issues/13) for instructions for how to get this curve officially supported. In the meantime it is RECOMMENDED that EOSIO DID implementations provide some support for these keys by specifying an unsupported type "EcdsaSecp256r1VerificationKey2019" (note the different "r") with the following structure:
+K1 key types MUST use the official [EcdsaSecp256k1VerificationKey2019](https://w3c-ccg.github.io/lds-ecdsa-secp256k1-2019) material type. The key material MUST be represented with in a Json Web Key with the "publicKeyJwk" property.Example:
 ```js
 {
     "id": "did:eosio:telos:example#active-1",
     "controller": "did:eosio:telos:example",
-    "type": "EcdsaSecp256r1VerificationKey2019",
+    "type": "EcdsaSecp256k1VerificationKey2019",
     "publicKeyJwk": {
-        "crv": "secp256r1",
+        "crv": "secp256k1",
         "x": "NtngWpJUr-rlNNbs0u-Aa8e16OwSJu6UiFf0Rdo1oJ4",
         "y": "qN1jKupJlFsPFc1UkWinqljv4YE0mq_Ickwnjgasvmo",
+        "kty": "EC"
+    }
+}
+```
+
+The R1 and WA key types both use the [Secp256r1](https://neuromancer.sk/std/secg/secp256r1) (sometimes referred to as P-256) elliptic curve. It is similar to the Secp256k1 curve as explained [here](https://www.johndcook.com/blog/2018/08/21/a-tale-of-two-elliptic-curves).  The R1 and WA key types MUST use the official [JsonWebKey2020](https://w3c.github.io/did-spec-registries/#jsonwebkey2020) material type. The key material MUST be represented with in a Json Web Key with the "publicKeyJwk" property. Example:
+```js
+{
+    "id": "did:eosio:telos:example#active-1",
+    "controller": "did:eosio:telos:example",
+    "type": "JsonWebKey2020",
+    "publicKeyJwk": {
+        "crv": "P-256",
+        "x": "yLSTsJxPc76EHc0RKdxnT+726KHa7jkgUnHejK3ULSE",
+        "y": "6HB9sZjpi69VqpCt68BuHOUadA4aaUf2iPdmuUxFY00",
         "kty": "EC"
     }
 }
