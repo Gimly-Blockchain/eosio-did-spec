@@ -624,4 +624,4 @@ Private blockchains me support the ability for DID users to control exclusion of
 | --- | --- | --- | --- |
 | DID Resolver | Javascript | [npm package](https://www.npmjs.com/package/eosio-did-resolver) | [https://github.com/Gimly-Blockchain/eosio-did-resolver](https://github.com/Gimly-Blockchain/eosio-did-resolver) |
 | DID Operations (CRUD) | Javascript |  [npm package](https://www.npmjs.com/package/eosio-did) | [https://github.com/Gimly-Blockchain/eosio-did](https://github.com/Gimly-Blockchain/eosio-did) |
-| Universal Resolver Driver | Docker | Docker Hub | [https://github.com/Gimly-Blockchain/eosio-did-universal-resolver-driver](https://github.com/Gimly-Blockchain/eosio-did-universal-resolver-driver) |
+| Universal Resolver Driver | Docker | [Docker Hub](https://hub.docker.com/r/gimlyblockchain/eosio-universal-resolver-driver) | [https://github.com/Gimly-Blockchain/eosio-did-universal-resolver-driver](https://github.com/Gimly-Blockchain/eosio-did-universal-resolver-driver) |
